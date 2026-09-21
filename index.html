@@ -947,7 +947,7 @@ function updateSyncStatus(message) {
             <div class="text-sm font-semibold text-slate-900 dark:text-slate-100 leading-snug line-clamp-3">
               ${card.front}
             </div>
-            ${card.frontImageg ? `<img src="${card.frontImageg}" class="rounded-xl max-h-32 object-cover border border-slate-200 dark:border-slate-800">` : ''}
+            ${card.frontImage ? `<img src="${card.frontImage}" class="rounded-xl max-h-32 object-cover border border-slate-200 dark:border-slate-800">` : ''}
 
             <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 line-clamp-3">
               ${card.back}
@@ -1118,13 +1118,13 @@ function updateSyncStatus(message) {
         }
       } else {
         const newCard = {
-          id: 'card_' + Date.now(),
-          front: front,
-          back: back,
-          frontImg: tempFrontImg,
-          backImg: tempBackImg,
-          starred: false
-        };
+  id: editingCardId || `card_${Date.now()}`,
+  front: document.getElementById('card-front-input').value.trim(),
+  back: document.getElementById('card-back-input').value.trim(),
+  frontImage: tempFrontImg || '',
+  backImage: tempBackImg || '',
+  starred: existingCard ? existingCard.starred : false
+};
         deck.cards.push(newCard);
       }
 
