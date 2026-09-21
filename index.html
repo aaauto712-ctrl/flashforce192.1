@@ -1,6 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
+  <!-- Firebase Compatibility SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+  // Replace these values with your actual Firebase project credentials
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  // Initialize Firebase and Firestore
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<!-- Firebase Initialization -->
+<script>
+  const firebaseConfig = {
+    apiKey: "YOUR_ACTUAL_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  // Initialize Firebase and define the db variable
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FlashForce192 - Interactive Flashcard Hub</title>
@@ -446,7 +484,7 @@
             </button>
           </div>
 
-          <form id="form-deck" onsubmit="handleDeckSubmit(event)" class="space-y-4">
+          <form id="form-deck" onsubmit="handleDeckSubmit(event)">
             <input type="hidden" id="deck-edit-id" value="">
             <div>
               <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Deck Title *</label>
@@ -476,7 +514,7 @@
             </button>
           </div>
 
-          <form id="form-card" onsubmit="handleCardSubmit(event)" class="space-y-4">
+          <form id="form-card" onsubmit="handleCardSubmit(event)">
             <input type="hidden" id="card-edit-id" value="">
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
@@ -1336,5 +1374,137 @@
       return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
   </script>
+  <script>
+  let currentDeckId = null;
+
+  // Update sync status indicator in your header
+  document.getElementById('sync-text').innerText = "Cloud Firestore Synced";
+
+  // ==========================================
+  // A. SAVING & LOADING DECKS
+  // ==========================================
+
+  // 1. Save new deck to Firestore on form submit
+  async function handleDeckSubmit(event) {
+    event.preventDefault();
+    const titleInput = document.getElementById('deck-title-input');
+    const title = titleInput.value.trim();
+
+    if (!title) return;
+
+    try {
+      // Add a new document to the "decks" collection in Firebase
+      await db.collection("decks").add({
+        title: title,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      titleInput.value = '';
+      closeModal('modal-deck');
+    } catch (error) {
+      console.error("Error saving deck to cloud:", error);
+      alert("Failed to save deck online.");
+    }
+  }
+
+  // 2. Real-time Listener to Load Decks from Cloud
+  function loadDecksFromCloud() {
+    db.collection("decks").orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        const container = document.getElementById('decks-container');
+        container.innerHTML = ''; // Clear container
+
+        if (snapshot.empty) {
+          container.innerHTML = `<p class="text-sm text-slate-500">No decks found. Create one to get started!</p>`;
+          return;
+        }
+
+        snapshot.forEach((doc) => {
+          const deck = doc.data();
+          const deckId = doc.id;
+
+          // Render each deck card into HTML
+          container.innerHTML += `
+            <div onclick="selectDeck('${deckId}', '${deck.title}')" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all cursor-pointer">
+              <h3 class="font-bold text-lg text-slate-900 dark:text-slate-100">${deck.title}</h3>
+              <p class="text-xs text-slate-500 mt-2">Click to view cards</p>
+            </div>
+          `;
+        });
+      }, (error) => {
+        console.error("Error fetching decks:", error);
+      });
+  }
+
+  // ==========================================
+  // B. SAVING & LOADING FLASHCARDS
+  // ==========================================
+
+  // Select a deck to view its flashcards
+  function selectDeck(deckId, title) {
+    currentDeckId = deckId;
+    navigateTo('deck');
+    loadCardsFromCloud(deckId);
+  }
+
+  // 1. Save new flashcard under the selected deck
+  async function handleCardSubmit(event) {
+    event.preventDefault();
+    if (!currentDeckId) return alert("No deck selected!");
+
+    const frontText = document.getElementById('card-front-input').value.trim();
+    const backText = document.getElementById('card-back-input').value.trim();
+
+    if (!frontText || !backText) return;
+
+    try {
+      // Save card to the "cards" collection linked by deckId
+      await db.collection("cards").add({
+        deckId: currentDeckId,
+        front: frontText,
+        back: backText,
+        isStarred: false,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      document.getElementById('card-front-input').value = '';
+      document.getElementById('card-back-input').value = '';
+
+      if (!document.getElementById('continuous-add-toggle').checked) {
+        closeModal('modal-card');
+      }
+    } catch (error) {
+      console.error("Error saving card to cloud:", error);
+    }
+  }
+
+  // 2. Real-time Listener to Load Cards for Selected Deck
+  function loadCardsFromCloud(deckId) {
+    db.collection("cards")
+      .where("deckId", "==", deckId)
+      .onSnapshot((snapshot) => {
+        const container = document.getElementById('cards-container');
+        container.innerHTML = '';
+
+        snapshot.forEach((doc) => {
+          const card = doc.data();
+          container.innerHTML += `
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
+              <div class="text-xs font-bold text-rose-500">FRONT</div>
+              <div class="text-sm font-medium text-slate-800 dark:text-slate-200">${card.front}</div>
+              <hr class="border-slate-100 dark:border-slate-800">
+              <div class="text-xs font-bold text-emerald-500">BACK</div>
+              <div class="text-sm font-medium text-slate-800 dark:text-slate-200">${card.back}</div>
+            </div>
+          `;
+        });
+      });
+  }
+
+  // Start listening to decks automatically when page loads
+  window.addEventListener('DOMContentLoaded', () => {
+    loadDecksFromCloud();
+  });
+</script>
 </body>
 </html>
