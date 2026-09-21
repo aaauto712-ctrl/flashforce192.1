@@ -21,7 +21,6 @@
   const db = firebase.firestore();
   const auth = firebase.auth();
   const storage = firebase.storage();
-</script>
 
 </script>
   <meta charset="UTF-8">
@@ -671,13 +670,17 @@ let uploadingBackImage = false;
 });
 
 function initAuth() {
+  updateSyncStatus('Signing in...');
+
   auth.signInAnonymously()
-    .then(() => {
-      console.log('Signed in anonymously');
+    .then(userCredential => {
+      console.log('Signed in anonymously:', userCredential.user.uid);
+      updateSyncStatus('Authenticated');
     })
     .catch(error => {
       console.error('Anonymous sign-in failed:', error);
       updateSyncStatus('Authentication Error');
+      alert(`Firebase Authentication failed:\n${error.code}\n${error.message}`);
     });
 }
 
@@ -1197,7 +1200,7 @@ function updateSyncStatus(message) {
 
     /* Image Preview Handlers */
     async function handleImageUpload(event, side) {
-  const file = event.target.files[0];
+  const file = event.target.files && event.target.files[0];
 
   if (!file) {
     return;
@@ -1209,67 +1212,149 @@ function updateSyncStatus(message) {
     return;
   }
 
-  // Prevent very large files from causing Firestore/storage failures.
-  if (file.size > 10 * 1024 * 1024) {
-    alert('Please choose an image smaller than 10 MB.');
+  // Prevent very large files from appearing to hang.
+  const maxSizeMB = 10;
+  if (file.size > maxSizeMB * 1024 * 1024) {
+    alert(`Image must be smaller than ${maxSizeMB} MB.`);
     event.target.value = '';
     return;
   }
 
-  const isFront = side === 'front';
-  const preview = document.getElementById(
-    isFront ? 'front-image-preview' : 'back-image-preview'
-  );
-  const removeButton = document.getElementById(
-    isFront ? 'remove-front-image-btn' : 'remove-back-image-btn'
-  );
+  const preview = document.getElementById(`${side}-image-preview`);
+  const removeButton = document.getElementById(`remove-${side}-image-btn`);
 
-  if (isFront) {
-    uploadingFrontImage = true;
-  } else {
-    uploadingBackImage = true;
-  }
-
-  preview.classList.remove('hidden');
-  preview.innerHTML = `
-    <p class="text-xs text-slate-500">Uploading image...</p>
-  `;
+  let uploadTask = null;
 
   try {
-    const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-    const fileRef = storage.ref(`flashcard-images/${fileName}`);
-
-    await fileRef.put(file);
-    const imageUrl = await fileRef.getDownloadURL();
-
-    if (isFront) {
-      tempFrontImg = imageUrl;
-    } else {
-      tempBackImg = imageUrl;
+    if (preview) {
+      preview.classList.remove('hidden');
+      preview.innerHTML = `
+        <div class="text-xs text-slate-500 dark:text-slate-400">
+          Uploading ${file.name}...
+          <div class="mt-2 w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+            <div id="${side}-upload-progress"
+                 class="h-full bg-brand-500 transition-all"
+                 style="width: 0%">
+            </div>
+          </div>
+          <div id="${side}-upload-status" class="mt-1">
+            Starting upload...
+          </div>
+        </div>
+      `;
     }
 
-    preview.innerHTML = `
-      <img
-        src="${imageUrl}"
-        alt="${side} card image"
-        class="max-h-32 mx-auto rounded-lg object-contain"
-      />
-    `;
+    const progressBar = document.getElementById(`${side}-upload-progress`);
+    const statusText = document.getElementById(`${side}-upload-status`);
 
-    removeButton.classList.remove('hidden');
+    // Make sure Anonymous Authentication has completed.
+    if (!auth.currentUser) {
+      await new Promise((resolve, reject) => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+          unsubscribe();
+
+          if (user) {
+            resolve(user);
+          } else {
+            reject(new Error('No Firebase user is signed in.'));
+          }
+        });
+      });
+    }
+
+    const userId = auth.currentUser.uid;
+    const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const filePath =
+      `flashcard-images/${userId}/${Date.now()}_${safeFileName}`;
+
+    const fileRef = storage.ref().child(filePath);
+
+    uploadTask = fileRef.put(file, {
+      contentType: file.type,
+      cacheControl: 'public,max-age=31536000'
+    });
+
+    await new Promise((resolve, reject) => {
+      uploadTask.on(
+        firebase.storage.TaskEvent.STATE_CHANGED,
+
+        snapshot => {
+          const percent =
+            Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+
+          if (progressBar) {
+            progressBar.style.width = `${percent}%`;
+          }
+
+          if (statusText) {
+            statusText.textContent = `Uploading... ${percent}%`;
+          }
+        },
+
+        error => {
+          reject(error);
+        },
+
+        () => {
+          resolve();
+        }
+      );
+    });
+
+    const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+
+    if (side === 'front') {
+      tempFrontImg = downloadURL;
+    } else {
+      tempBackImg = downloadURL;
+    }
+
+    if (preview) {
+      preview.innerHTML = `
+        <img
+          src="${downloadURL}"
+          alt="${side} card image preview"
+          class="max-h-32 max-w-full mx-auto rounded-lg object-contain"
+        />
+        <p class="mt-1 text-xs text-emerald-600 dark:text-emerald-400 text-center">
+          Upload complete
+        </p>
+      `;
+    }
+
+    if (removeButton) {
+      removeButton.classList.remove('hidden');
+    }
+
+    console.log(`${side} image uploaded successfully:`, downloadURL);
+
   } catch (error) {
-    console.error('Image upload failed:', error);
-    preview.innerHTML = `
-      <p class="text-xs text-rose-500">
-        Image upload failed. Check Firebase Storage rules.
-      </p>
-    `;
-  } finally {
-    if (isFront) {
-      uploadingFrontImage = false;
-    } else {
-      uploadingBackImage = false;
+    console.error(`${side} image upload failed:`, error);
+
+    if (preview) {
+      preview.classList.remove('hidden');
+      preview.innerHTML = `
+        <p class="text-xs text-rose-600 dark:text-rose-400">
+          Upload failed: ${error.code || error.message}
+        </p>
+      `;
     }
+
+    alert(
+      `Image upload failed.\n\n${error.code || error.message}\n\n` +
+      `Check the browser console for details.`
+    );
+
+    if (side === 'front') {
+      tempFrontImg = '';
+    } else {
+      tempBackImg = '';
+    }
+  } finally {
+    // Always clear the file input so the same image can be selected again.
+    event.target.value = '';
   }
 }
 
@@ -1282,20 +1367,27 @@ function updateSyncStatus(message) {
     }
 
     function removeCardImage(side) {
-  const isFront = side === 'front';
-
-  if (isFront) {
+  if (side === 'front') {
     tempFrontImg = '';
-    document.getElementById('card-front-image-input').value = '';
-    document.getElementById('front-image-preview').innerHTML = '';
-    document.getElementById('front-image-preview').classList.add('hidden');
-    document.getElementById('remove-front-image-btn').classList.add('hidden');
   } else {
     tempBackImg = '';
-    document.getElementById('card-back-image-input').value = '';
-    document.getElementById('back-image-preview').innerHTML = '';
-    document.getElementById('back-image-preview').classList.add('hidden');
-    document.getElementById('remove-back-image-btn').classList.add('hidden');
+  }
+
+  const preview = document.getElementById(`${side}-image-preview`);
+  const removeButton = document.getElementById(`remove-${side}-image-btn`);
+  const input = document.getElementById(`card-${side}-image-input`);
+
+  if (preview) {
+    preview.innerHTML = '';
+    preview.classList.add('hidden');
+  }
+
+  if (removeButton) {
+    removeButton.classList.add('hidden');
+  }
+
+  if (input) {
+    input.value = '';
   }
 }
 
