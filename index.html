@@ -657,32 +657,85 @@
       }
     ];
 
-    /* Initialization */
     document.addEventListener('DOMContentLoaded', () => {
-      initData();
-      initTheme();
-      updateAdminUI();
-      renderLibrary();
-      setupKeyboardShortcuts();
+  initTheme();
+  updateAdminUI();
+  setupKeyboardShortcuts();
+
+  initAuth();
+  initData();
+});
+
+function initAuth() {
+  auth.signInAnonymously()
+    .then(() => {
+      console.log('Signed in anonymously');
+    })
+    .catch(error => {
+      console.error('Anonymous sign-in failed:', error);
+      updateSyncStatus('Authentication Error');
     });
+}
 
-    function initData() {
-      const stored = localStorage.getItem('flashforce_decks');
-      if (stored) {
-        try {
-          decks = JSON.parse(stored);
-        } catch (e) {
+function initData() {
+  updateSyncStatus('Connecting...');
+
+  db.collection('flashforce')
+    .doc('content')
+    .onSnapshot(
+      snapshot => {
+        if (snapshot.exists && Array.isArray(snapshot.data().decks)) {
+          decks = snapshot.data().decks;
+        } else {
           decks = defaultDecks;
-        }
-      } else {
-        decks = defaultDecks;
-        saveDecks();
-      }
-    }
 
-    function saveDecks() {
-      localStorage.setItem('flashforce_decks', JSON.stringify(decks));
-    }
+          // Creates the first cloud copy.
+          // Only keep this if your Firestore rules permit the current user to write.
+          if (isAdmin) {
+            saveDecks();
+          }
+        }
+
+        updateSyncStatus('Cloud Synced');
+
+        if (currentDeckId) {
+          renderDeckDetail();
+        } else {
+          renderLibrary();
+        }
+      },
+      error => {
+        console.error('Firestore listener error:', error);
+        updateSyncStatus('Sync Error');
+      }
+    );
+}
+
+async function saveDecks() {
+  try {
+    updateSyncStatus('Saving...');
+
+    await db.collection('flashforce')
+      .doc('content')
+      .set({
+        decks: decks,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+    updateSyncStatus('Cloud Synced');
+  } catch (error) {
+    console.error('Could not save decks:', error);
+    updateSyncStatus('Save Error');
+  }
+}
+
+function updateSyncStatus(message) {
+  const syncText = document.getElementById('sync-text');
+
+  if (syncText) {
+    syncText.textContent = message;
+  }
+}
 
     /* Admin Authorization Logic */
     function updateAdminUI() {
@@ -893,12 +946,12 @@
             <div class="text-sm font-semibold text-slate-900 dark:text-slate-100 leading-snug line-clamp-3">
               ${card.front}
             </div>
-            ${card.frontImg ? `<img src="${card.frontImg}" class="rounded-xl max-h-32 object-cover border border-slate-200 dark:border-slate-800">` : ''}
+            ${card.frontImageg ? `<img src="${card.frontImageg}" class="rounded-xl max-h-32 object-cover border border-slate-200 dark:border-slate-800">` : ''}
 
             <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 line-clamp-3">
               ${card.back}
             </div>
-            ${card.backImg ? `<img src="${card.backImg}" class="rounded-xl max-h-32 object-cover border border-slate-200 dark:border-slate-800">` : ''}
+            ${card.backImage ? `<img src="${card.backImage}" class="rounded-xl max-h-32 object-cover border border-slate-200 dark:border-slate-800">` : ''}
           </div>
 
           ${isAdmin ? `
@@ -1029,8 +1082,8 @@
       document.getElementById('card-front-input').value = card.front;
       document.getElementById('card-back-input').value = card.back;
       
-      tempFrontImg = card.frontImg || '';
-      tempBackImg = card.backImg || '';
+      tempFrontImg = card.frontImageg || '';
+      tempBackImg = card.backImage || '';
 
       if (tempFrontImg) showImagePreview('front', tempFrontImg);
       else removeCardImage('front');
@@ -1059,8 +1112,8 @@
         if (card) {
           card.front = front;
           card.back = back;
-          card.frontImg = tempFrontImg;
-          card.backImg = tempBackImg;
+          card.frontImageg = tempFrontImg;
+          card.backImage = tempBackImg;
         }
       } else {
         const newCard = {
@@ -1231,8 +1284,8 @@
       const frontText = frontFirstMode ? card.front : card.back;
       const backText = frontFirstMode ? card.back : card.front;
 
-      document.getElementById('study-card-front-text').innerHTML = frontText + (card.frontImg ? `<div class="mt-3"><img src="${card.frontImg}" class="max-h-40 rounded-xl mx-auto border border-slate-200 dark:border-slate-800"></div>` : '');
-      document.getElementById('study-card-back-text').innerHTML = backText + (card.backImg ? `<div class="mt-3"><img src="${card.backImg}" class="max-h-40 rounded-xl mx-auto border border-slate-200 dark:border-slate-800"></div>` : '');
+      document.getElementById('study-card-front-text').innerHTML = frontText + (card.frontImageg ? `<div class="mt-3"><img src="${card.frontImageg}" class="max-h-40 rounded-xl mx-auto border border-slate-200 dark:border-slate-800"></div>` : '');
+      document.getElementById('study-card-back-text').innerHTML = backText + (card.backImage ? `<div class="mt-3"><img src="${card.backImage}" class="max-h-40 rounded-xl mx-auto border border-slate-200 dark:border-slate-800"></div>` : '');
 
       // Star Icon
       const starBtn = document.getElementById('study-star-icon');
