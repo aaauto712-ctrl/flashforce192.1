@@ -4,7 +4,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyAPAXZqaQTB7EFAxv2MR_VWOPJMyTFevfU",
@@ -20,7 +20,7 @@
 
   const db = firebase.firestore();
   const auth = firebase.auth();
-  const storage = firebase.storage();
+</script>
 
 </script>
   <meta charset="UTF-8">
@@ -632,9 +632,7 @@
     let frontFirstMode = true;
     let isShuffled = false;
     let tempFrontImg = '';
-let tempBackImg = '';
-let uploadingFrontImage = false;
-let uploadingBackImage = false;
+    let tempBackImg = '';
     let tempCSVContent = '';
     let isAdmin = localStorage.getItem('flashforce_is_admin') === 'true';
 
@@ -670,17 +668,13 @@ let uploadingBackImage = false;
 });
 
 function initAuth() {
-  updateSyncStatus('Signing in...');
-
   auth.signInAnonymously()
-    .then(userCredential => {
-      console.log('Signed in anonymously:', userCredential.user.uid);
-      updateSyncStatus('Authenticated');
+    .then(() => {
+      console.log('Signed in anonymously');
     })
     .catch(error => {
       console.error('Anonymous sign-in failed:', error);
       updateSyncStatus('Authentication Error');
-      alert(`Firebase Authentication failed:\n${error.code}\n${error.message}`);
     });
 }
 
@@ -953,7 +947,7 @@ function updateSyncStatus(message) {
             <div class="text-sm font-semibold text-slate-900 dark:text-slate-100 leading-snug line-clamp-3">
               ${card.front}
             </div>
-            ${card.frontImage ? `<img src="${card.frontImage}" class="rounded-xl max-h-32 object-cover border border-slate-200 dark:border-slate-800">` : ''}
+            ${card.frontImageg ? `<img src="${card.frontImageg}" class="rounded-xl max-h-32 object-cover border border-slate-200 dark:border-slate-800">` : ''}
 
             <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 line-clamp-3">
               ${card.back}
@@ -1101,79 +1095,52 @@ function updateSyncStatus(message) {
       openModal('modal-card');
     }
 
-    async function handleCardSubmit(e) {
-  e.preventDefault();
+    function handleCardSubmit(e) {
+      e.preventDefault();
+      if (!checkAdminPermission()) return;
 
-  if (!checkAdminPermission()) {
-    return;
-  }
+      const deck = decks.find(d => d.id === currentDeckId);
+      if (!deck) return;
 
-  if (uploadingFrontImage || uploadingBackImage) {
-    alert('Please wait for the image upload to finish.');
-    return;
-  }
+      const editId = document.getElementById('card-edit-id').value;
+      const front = document.getElementById('card-front-input').value.trim();
+      const back = document.getElementById('card-back-input').value.trim();
 
-  const deck = decks.find(d => d.id === currentDeckId);
+      if (!front || !back) return;
 
-  if (!deck) {
-    alert('No deck is selected.');
-    return;
-  }
+      if (editId) {
+        const card = deck.cards.find(c => c.id === editId);
+        if (card) {
+          card.front = front;
+          card.back = back;
+          card.frontImageg = tempFrontImg;
+          card.backImage = tempBackImg;
+        }
+      } else {
+        const newCard = {
+          id: 'card_' + Date.now(),
+          front: front,
+          back: back,
+          frontImg: tempFrontImg,
+          backImg: tempBackImg,
+          starred: false
+        };
+        deck.cards.push(newCard);
+      }
 
-  const front = document.getElementById('card-front-input').value.trim();
-  const back = document.getElementById('card-back-input').value.trim();
-  const editId = document.getElementById('card-edit-id').value;
+      saveDecks();
+      renderDeckDetail();
 
-  if (!front && !back && !tempFrontImg && !tempBackImg) {
-    alert('Please enter text or add an image.');
-    return;
-  }
-
-  if (editId) {
-    const card = deck.cards.find(c => c.id === editId);
-
-    if (card) {
-      card.front = front;
-      card.back = back;
-      card.frontImage = tempFrontImg || '';
-      card.backImage = tempBackImg || '';
+      const keepOpen = document.getElementById('continuous-add-toggle').checked;
+      if (keepOpen && !editId) {
+        document.getElementById('card-front-input').value = '';
+        document.getElementById('card-back-input').value = '';
+        removeCardImage('front');
+        removeCardImage('back');
+      } else {
+        closeModal('modal-card');
+      }
     }
-  } else {
-    deck.cards.push({
-      id: `card_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      front: front,
-      back: back,
-      frontImage: tempFrontImg || '',
-      backImage: tempBackImg || '',
-      starred: false
-    });
-  }
-
-  try {
-    await saveDecks();
-
-    renderDeckDetail();
-
-    const keepOpen = document.getElementById('continuous-add-toggle').checked;
-
-    if (keepOpen && !editId) {
-      document.getElementById('form-card').reset();
-      document.getElementById('card-edit-id').value = '';
-      document.getElementById('card-modal-title').textContent = 'Add New Flashcard';
-
-      tempFrontImg = '';
-      tempBackImg = '';
-
-      removeCardImage('front');
-      removeCardImage('back');
-    } else {
-      closeModal('modal-card');
-    }
-  } catch (error) {
-    console.error('Could not add card:', error);
-    alert('The card could not be saved. Check the browser console for the error.');
-  }
-}
 
     function deleteCard(cardId) {
       if (!checkAdminPermission()) return;
@@ -1199,164 +1166,19 @@ function updateSyncStatus(message) {
     }
 
     /* Image Preview Handlers */
-    async function handleImageUpload(event, side) {
-  const file = event.target.files && event.target.files[0];
+    function handleImageUpload(e, side) {
+      const file = e.target.files[0];
+      if (!file) return;
 
-  if (!file) {
-    return;
-  }
-
-  if (!file.type.startsWith('image/')) {
-    alert('Please select an image file.');
-    event.target.value = '';
-    return;
-  }
-
-  // Prevent very large files from appearing to hang.
-  const maxSizeMB = 10;
-  if (file.size > maxSizeMB * 1024 * 1024) {
-    alert(`Image must be smaller than ${maxSizeMB} MB.`);
-    event.target.value = '';
-    return;
-  }
-
-  const preview = document.getElementById(`${side}-image-preview`);
-  const removeButton = document.getElementById(`remove-${side}-image-btn`);
-
-  let uploadTask = null;
-
-  try {
-    if (preview) {
-      preview.classList.remove('hidden');
-      preview.innerHTML = `
-        <div class="text-xs text-slate-500 dark:text-slate-400">
-          Uploading ${file.name}...
-          <div class="mt-2 w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-            <div id="${side}-upload-progress"
-                 class="h-full bg-brand-500 transition-all"
-                 style="width: 0%">
-            </div>
-          </div>
-          <div id="${side}-upload-status" class="mt-1">
-            Starting upload...
-          </div>
-        </div>
-      `;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const imgData = evt.target.result;
+        if (side === 'front') tempFrontImg = imgData;
+        else tempBackImg = imgData;
+        showImagePreview(side, imgData);
+      };
+      reader.readAsDataURL(file);
     }
-
-    const progressBar = document.getElementById(`${side}-upload-progress`);
-    const statusText = document.getElementById(`${side}-upload-status`);
-
-    // Make sure Anonymous Authentication has completed.
-    if (!auth.currentUser) {
-      await new Promise((resolve, reject) => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
-          unsubscribe();
-
-          if (user) {
-            resolve(user);
-          } else {
-            reject(new Error('No Firebase user is signed in.'));
-          }
-        });
-      });
-    }
-
-    const userId = auth.currentUser.uid;
-    const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-    const filePath =
-      `flashcard-images/${userId}/${Date.now()}_${safeFileName}`;
-
-    const fileRef = storage.ref().child(filePath);
-
-    uploadTask = fileRef.put(file, {
-      contentType: file.type,
-      cacheControl: 'public,max-age=31536000'
-    });
-
-    await new Promise((resolve, reject) => {
-      uploadTask.on(
-        firebase.storage.TaskEvent.STATE_CHANGED,
-
-        snapshot => {
-          const percent =
-            Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
-
-          if (progressBar) {
-            progressBar.style.width = `${percent}%`;
-          }
-
-          if (statusText) {
-            statusText.textContent = `Uploading... ${percent}%`;
-          }
-        },
-
-        error => {
-          reject(error);
-        },
-
-        () => {
-          resolve();
-        }
-      );
-    });
-
-    const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-
-    if (side === 'front') {
-      tempFrontImg = downloadURL;
-    } else {
-      tempBackImg = downloadURL;
-    }
-
-    if (preview) {
-      preview.innerHTML = `
-        <img
-          src="${downloadURL}"
-          alt="${side} card image preview"
-          class="max-h-32 max-w-full mx-auto rounded-lg object-contain"
-        />
-        <p class="mt-1 text-xs text-emerald-600 dark:text-emerald-400 text-center">
-          Upload complete
-        </p>
-      `;
-    }
-
-    if (removeButton) {
-      removeButton.classList.remove('hidden');
-    }
-
-    console.log(`${side} image uploaded successfully:`, downloadURL);
-
-  } catch (error) {
-    console.error(`${side} image upload failed:`, error);
-
-    if (preview) {
-      preview.classList.remove('hidden');
-      preview.innerHTML = `
-        <p class="text-xs text-rose-600 dark:text-rose-400">
-          Upload failed: ${error.code || error.message}
-        </p>
-      `;
-    }
-
-    alert(
-      `Image upload failed.\n\n${error.code || error.message}\n\n` +
-      `Check the browser console for details.`
-    );
-
-    if (side === 'front') {
-      tempFrontImg = '';
-    } else {
-      tempBackImg = '';
-    }
-  } finally {
-    // Always clear the file input so the same image can be selected again.
-    event.target.value = '';
-  }
-}
 
     function showImagePreview(side, src) {
       const container = document.getElementById(`${side}-image-preview`);
@@ -1367,29 +1189,11 @@ function updateSyncStatus(message) {
     }
 
     function removeCardImage(side) {
-  if (side === 'front') {
-    tempFrontImg = '';
-  } else {
-    tempBackImg = '';
-  }
-
-  const preview = document.getElementById(`${side}-image-preview`);
-  const removeButton = document.getElementById(`remove-${side}-image-btn`);
-  const input = document.getElementById(`card-${side}-image-input`);
-
-  if (preview) {
-    preview.innerHTML = '';
-    preview.classList.add('hidden');
-  }
-
-  if (removeButton) {
-    removeButton.classList.add('hidden');
-  }
-
-  if (input) {
-    input.value = '';
-  }
-}
+      if (side === 'front') tempFrontImg = '';
+      else tempBackImg = '';
+      document.getElementById(`${side}-image-preview`).classList.add('hidden');
+      document.getElementById(`remove-${side}-image-btn`).classList.add('hidden');
+    }
 
     /* CSV Import Handlers */
     function openCSVImportModal() {
