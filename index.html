@@ -363,8 +363,9 @@
                   </span>
                   <button 
   type="button"
-  onclick="event.stopPropagation(); toggleStarCurrentStudyCard();" 
-  class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+  onclick="toggleStarCurrentStudyCard(event)"
+  class="relative z-20 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+  aria-label="Toggle starred card"
 >
                     <svg id="study-star-icon" class="w-6 h-6 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
@@ -387,7 +388,8 @@
               </div>
 
               <!-- Back Side Face (Updated Light/Dark Mode Styling) -->
-              <<div class="flex justify-between items-center">
+               <div class="backface-hidden absolute inset-0 w-full h-full rounded-3xl p-8 sm:p-10 bg-rose-50 dark:bg-slate-900 border-2 border-rose-300 dark:border-rose-900/50 shadow-xl flex flex-col justify-between transition-colors duration-300 rotate-y-180"></div>
+              <div class="flex justify-between items-center">
   <span class="text-xs font-bold uppercase tracking-wider text-rose-700 bg-rose-200/80 dark:text-amber-400 dark:bg-amber-500/20 px-3 py-1 rounded-full border border-rose-300 dark:border-amber-500/30">
     Back (Answer)
   </span>
@@ -396,11 +398,11 @@
     <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Flashcard Reveal</span>
 
     <button
-      type="button"
-      onclick="event.stopPropagation(); toggleStarCurrentStudyCard();"
-      class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
-      aria-label="Toggle starred card"
-    >
+  type="button"
+  onclick="toggleStarCurrentStudyCard(event)"
+  class="relative z-20 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+  aria-label="Toggle starred card"
+>
       <svg id="study-star-icon-back" class="w-6 h-6 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1.838 1.838 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
       </svg>
@@ -1575,16 +1577,29 @@ starIcons.forEach(icon => {
       }
     }
 
-    function toggleStarCurrentStudyCard() {
+    function toggleStarCurrentStudyCard(event) {
+  event.preventDefault();
+  event.stopPropagation();
+
   const card = studyCards[studyIndex];
   if (!card) return;
 
-  const currentlyStarred = isCardStarred(card);
+  const starred = !isCardStarred(card);
 
-  // Save only in this browser. Nothing is sent to Firestore.
-  setLocalCardStar(card.id, !currentlyStarred);
+  setLocalCardStar(card.id, starred);
+  card.starred = starred;
 
-  // Refresh the study-mode star icon.
+  const deck = decks.find(deck => deck.id === currentDeckId);
+  if (deck) {
+    const primaryCard = deck.cards.find(item => item.id === card.id);
+
+    if (primaryCard) {
+      primaryCard.starred = starred;
+    }
+
+    saveDecks();
+  }
+
   renderStudyCard();
 }
 
