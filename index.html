@@ -1534,9 +1534,9 @@ const starIcons = [
 starIcons.forEach(icon => {
   if (!icon) return;
 
-  icon.className = card.starred
-    ? 'w-6 h-6 text-amber-400 fill-amber-400'
-    : 'w-6 h-6 text-slate-300 dark:text-slate-600';
+  icon.className = isCardStarred(card)
+  ? 'w-6 h-6 text-amber-400 fill-amber-400'
+  : 'w-6 h-6 text-slate-300 dark:text-slate-600';
 });
 
       // Progress Bar & Counter
