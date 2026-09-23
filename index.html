@@ -483,7 +483,17 @@
               <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Deck Title *</label>
               <input type="text" id="deck-title-input" required placeholder="e.g. carbohydrate metabolism" class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:outline-none">
             </div>
-
+<div>
+  <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+    Creator
+  </label>
+  <input
+    type="text"
+    id="deck-creator-input"
+    placeholder="e.g. intouchlee"
+    class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+  >
+</div>
             <div class="flex justify-end gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
               <button type="button" onclick="closeModal('modal-deck')" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
               <button type="submit" class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 shadow-md">Save Deck</button>
@@ -855,18 +865,39 @@ function updateSyncStatus(message) {
         <div class="group relative rounded-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-blue-200/80 dark:border-slate-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
           <div>
             <div class="flex items-start justify-between gap-3 mb-3">
-              <h3 onclick="openDeck('${deck.id}')" class="font-bold text-lg text-slate-900 dark:text-slate-100 hover:text-brand-600 dark:hover:text-blue-400 cursor-pointer transition-colors line-clamp-1">${escapeHtml(deck.title)}</h3>
-              ${isAdmin ? `
-              <div class="flex items-center gap-1">
-                <button onclick="openEditDeckModal('${deck.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all" title="Edit Deck">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                </button>
-                <button onclick="deleteDeck('${deck.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-all" title="Delete Deck">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                </button>
-              </div>
-              ` : ''}
-            </div>
+  <div class="min-w-0">
+    <h3
+      onclick="openDeck('${deck.id}')"
+      class="font-bold text-lg text-slate-900 dark:text-slate-100 hover:text-brand-600 dark:hover:text-blue-400 cursor-pointer transition-colors break-words"
+    >
+      ${escapeHtml(deck.title)}
+    </h3>
+
+    <p class="mt-1 text-xs font-normal text-slate-400 dark:text-slate-500">
+      made by ${escapeHtml(deck.creator || 'Unknown')}
+    </p>
+  </div>
+
+  ${isAdmin ? `
+  <div class="flex items-center gap-1 shrink-0">
+    <button
+      onclick="openEditDeckModal('${deck.id}')"
+      class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+      title="Edit Deck"
+    >
+      <!-- Keep your existing edit SVG here -->
+    </button>
+
+    <button
+      onclick="deleteDeck('${deck.id}')"
+      class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-all"
+      title="Delete Deck"
+    >
+      <!-- Keep your existing delete SVG here -->
+    </button>
+  </div>
+  ` : ''}
+</div>
             <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mb-4">${deck.cards.length} Card${deck.cards.length === 1 ? '' : 's'}</p>
           </div>
 
@@ -1019,6 +1050,14 @@ function updateSyncStatus(message) {
       document.getElementById('deck-modal-title').innerText = 'Create New Deck';
       document.getElementById('deck-edit-id').value = '';
       document.getElementById('deck-title-input').value = '';
+      function openNewDeckModal() {
+  if (!checkAdminPermission()) return;
+  document.getElementById('deck-modal-title').innerText = 'Create New Deck';
+  document.getElementById('deck-edit-id').value = '';
+  document.getElementById('deck-title-input').value = '';
+  document.getElementById('deck-creator-input').value = '';
+  openModal('modal-deck');
+}
       openModal('modal-deck');
     }
 
@@ -1029,6 +1068,17 @@ function updateSyncStatus(message) {
       document.getElementById('deck-modal-title').innerText = 'Edit Deck';
       document.getElementById('deck-edit-id').value = deck.id;
       document.getElementById('deck-title-input').value = deck.title;
+      function openEditDeckModal(id) {
+  if (!checkAdminPermission()) return;
+  const deck = decks.find(d => d.id === id);
+  if (!deck) return;
+
+  document.getElementById('deck-modal-title').innerText = 'Edit Deck';
+  document.getElementById('deck-edit-id').value = deck.id;
+  document.getElementById('deck-title-input').value = deck.title;
+  document.getElementById('deck-creator-input').value = deck.creator || '';
+  openModal('modal-deck');
+}
       openModal('modal-deck');
     }
 
@@ -1038,20 +1088,25 @@ function updateSyncStatus(message) {
 
       const editId = document.getElementById('deck-edit-id').value;
       const title = document.getElementById('deck-title-input').value.trim();
+      const creator = document.getElementById('deck-creator-input').value.trim();
 
       if (!title) return;
 
       if (editId) {
-        const deck = decks.find(d => d.id === editId);
-        if (deck) deck.title = title;
-      } else {
-        const newDeck = {
-          id: 'deck_' + Date.now(),
-          title: title,
-          cards: []
-        };
-        decks.push(newDeck);
-      }
+  const deck = decks.find(d => d.id === editId);
+  if (deck) {
+    deck.title = title;
+    deck.creator = creator;
+  }
+} else {
+  const newDeck = {
+    id: 'deck_' + Date.now(),
+    title: title,
+    creator: creator,
+    cards: []
+  };
+  decks.push(newDeck);
+}
 
       saveDecks();
       closeModal('modal-deck');
