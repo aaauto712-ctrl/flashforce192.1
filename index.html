@@ -779,9 +779,7 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 function getDeckSurfaceColor(deckColor) {
-  const isDarkMode = document.documentElement.classList.contains('dark');
-
-  if (isDarkMode) {
+  if (document.documentElement.classList.contains('dark')) {
     return `linear-gradient(
       135deg,
       ${hexToRgba(deckColor, 0.28)},
@@ -910,7 +908,7 @@ function updateSyncStatus(message) {
   return `
         <div
   class="group relative rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300"
-  style="background: linear-gradient(135deg, ${hexToRgba(deckColor, 0.18)}, rgba(255,255,255,0.82)); border: 1px solid ${hexToRgba(deckColor, 0.5)};"
+  style="background: ${getDeckSurfaceColor(deckColor)}; border: 1px solid ${hexToRgba(deckColor, 0.5)};"
 >
           <div>
             <div class="flex items-start justify-between gap-3 mb-3">
@@ -1776,25 +1774,32 @@ starIcon.classList.toggle('dark:text-slate-600', !isStarred);
     }
 
     /* Theme Toggle */
-    function toggleTheme() {
-      const html = document.documentElement;
-      if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        localStorage.setItem('flashforce_theme', 'light');
-      } else {
-        html.classList.add('dark');
-        localStorage.setItem('flashforce_theme', 'dark');
-      }
-    }
+   function toggleTheme() {
+  const html = document.documentElement;
+  const isDarkMode = html.classList.toggle('dark');
+
+  localStorage.setItem(
+    'flashforce_theme',
+    isDarkMode ? 'dark' : 'light'
+  );
+
+  // Rebuild inline-styled elements using the new theme
+  if (currentDeckId) {
+    renderDeckDetail();
+  } else {
+    renderLibrary();
+  }
+}
 
     function initTheme() {
-      const theme = localStorage.getItem('flashforce_theme');
-      if (theme === 'light') {
-        document.documentElement.classList.remove('dark');
-      } else {
-        document.documentElement.classList.add('dark');
-      }
-    }
+  const theme = localStorage.getItem('flashforce_theme');
+
+  if (theme === 'light') {
+    document.documentElement.classList.remove('dark');
+  } else {
+    document.documentElement.classList.add('dark');
+  }
+}
 
     /* Helper Utilities */
     function escapeHtml(text) {
