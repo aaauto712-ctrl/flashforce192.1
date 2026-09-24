@@ -763,12 +763,24 @@
     }
 
     function getDeckSurfaceColor(deckColor) {
-      if (document.documentElement.classList.contains('dark')) {
-        return `linear-gradient(135deg, ${hexToRgba(deckColor, 0.28)}, rgba(15, 23, 42, 0.96))`;
-      }
+  const isDark =
+    document.documentElement.dataset.theme === 'dark' ||
+    document.documentElement.classList.contains('dark');
 
-      return `linear-gradient(135deg, ${hexToRgba(deckColor, 0.16)}, rgba(255, 255, 255, 0.86))`;
-    }
+  if (isDark) {
+    return `linear-gradient(
+      135deg,
+      ${hexToRgba(deckColor, 0.28)},
+      rgba(15, 23, 42, 0.96)
+    )`;
+  }
+
+  return `linear-gradient(
+    135deg,
+    ${hexToRgba(deckColor, 0.16)},
+    rgba(255, 255, 255, 0.86)
+  )`;
+}
 
     function updateSyncStatus(message) {
       const syncText = document.getElementById('sync-text');
@@ -1384,19 +1396,35 @@
         }
       });
     }
+function applyTheme(theme) {
+  const isDark = theme === 'dark';
 
-    function initTheme() {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const savedTheme = localStorage.getItem('flashforce_theme');
-      const useDark = savedTheme ? savedTheme === 'dark' : prefersDark;
-      document.documentElement.classList.toggle('dark', useDark);
-      document.body.classList.toggle('dark', useDark);
-    }
+  document.documentElement.classList.toggle('dark', isDark);
+  document.body.classList.toggle('dark', isDark);
+  document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
 
-    function toggleTheme() {
-      const dark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('flashforce_theme', dark ? 'dark' : 'light');
-    }
+  localStorage.setItem('flashforce_theme', isDark ? 'dark' : 'light');
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('flashforce_theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+
+  applyTheme(isDark ? 'light' : 'dark');
+
+  // Re-render inline deck backgrounds after changing theme.
+  if (currentDeckId) {
+    renderDeckDetail();
+  } else {
+    renderLibrary();
+  }
+}
   </script>
 </body>
 </html>
