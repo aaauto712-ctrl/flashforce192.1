@@ -161,12 +161,13 @@
         <div class="flex items-center gap-2 sm:gap-3">
           <!-- Admin / Key Status Button -->
           <button 
-            id="admin-auth-btn"
-            onclick="toggleAdminAuth()"
-            class="px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all border shadow-sm"
-          >
-            <!-- Rendered by JS -->
-          </button>
+  type="button"
+  id="admin-auth-btn"
+  onclick="toggleAdminAuth()"
+  class="px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all border shadow-sm"
+>
+  <!-- Rendered by JS -->
+</button>
 
           <!-- Sync Status Badge -->
           <div id="sync-status" class="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border border-emerald-500/30">
@@ -831,36 +832,64 @@ function updateSyncStatus(message) {
       return true;
     }
 
-    function toggleAdminAuth() {
-      if (isAdmin) {
-        isAdmin = false;
-        localStorage.setItem('flashforce_is_admin', 'false');
-        updateAdminUI();
-        if (currentDeckId) renderDeckDetail();
-        else renderLibrary();
-      } else {
-        openModal('modal-auth');
-      }
+   function toggleAdminAuth() {
+  if (isAdmin) {
+    isAdmin = false;
+    localStorage.setItem('flashforce_is_admin', 'false');
+    updateAdminUI();
+
+    if (currentDeckId) {
+      renderDeckDetail();
+    } else {
+      renderLibrary();
     }
 
-    function handleAuthSubmit(e) {
-      e.preventDefault();
-      const input = document.getElementById('auth-key-input').value;
-      const errorMsg = document.getElementById('auth-error-msg');
+    return;
+  }
 
-      if (input === ADMIN_KEY) {
-        isAdmin = true;
-        localStorage.setItem('flashforce_is_admin', 'true');
-        errorMsg.classList.add('hidden');
-        document.getElementById('auth-key-input').value = '';
-        closeModal('modal-auth');
-        updateAdminUI();
-        if (currentDeckId) renderDeckDetail();
-        else renderLibrary();
-      } else {
-        errorMsg.classList.remove('hidden');
-      }
+  const authModal = document.getElementById('modal-auth');
+
+  if (!authModal) {
+    console.error('The modal-auth element was not found.');
+    return;
+  }
+
+  authModal.classList.remove('hidden');
+
+  const keyInput = document.getElementById('auth-key-input');
+  if (keyInput) {
+    keyInput.focus();
+  }
+}
+
+    function handleAuthSubmit(event) {
+  event.preventDefault();
+
+  const input = document.getElementById('auth-key-input');
+  const errorMessage = document.getElementById('auth-error-msg');
+
+  if (!input || !errorMessage) return;
+
+  if (input.value.trim() === ADMIN_KEY) {
+    isAdmin = true;
+    localStorage.setItem('flashforce_is_admin', 'true');
+
+    input.value = '';
+    errorMessage.classList.add('hidden');
+
+    closeModal('modal-auth');
+    updateAdminUI();
+
+    if (currentDeckId) {
+      renderDeckDetail();
+    } else {
+      renderLibrary();
     }
+  } else {
+    errorMessage.classList.remove('hidden');
+    input.select();
+  }
+}
 
     /* Navigation */
     function navigateTo(view) {
@@ -1147,30 +1176,7 @@ function openNewDeckModal() {
 function openEditDeckModal(id) {
   if (!checkAdminPermission()) return;
 
-  const deck = decks.find(d => d.id === id);
-  if (!deck) return;
-
-  document.getElementById('deck-modal-title').innerText = 'Edit Deck';
-  document.getElementById('deck-edit-id').value = deck.id;
-  document.getElementById('deck-title-input').value = deck.title;
-  document.getElementById('deck-creator-input').value = deck.creator || '';
-
-  // Load the existing deck color
-  document.getElementById('deck-color-input').value = deck.color || '#0066cc';
-
-  openModal('modal-deck');
-}
-
-    function openEditDeckModal(id) {
-      if (!checkAdminPermission()) return;
-      const deck = decks.find(d => d.id === id);
-      if (!deck) return;
-      document.getElementById('deck-modal-title').innerText = 'Edit Deck';
-      document.getElementById('deck-edit-id').value = deck.id;
-      document.getElementById('deck-title-input').value = deck.title;
-      function openEditDeckModal(id) {
-  if (!checkAdminPermission()) return;
-  const deck = decks.find(d => d.id === id);
+  const deck = decks.find(deck => deck.id === id);
   if (!deck) return;
 
   document.getElementById('deck-modal-title').innerText = 'Edit Deck';
@@ -1178,10 +1184,9 @@ function openEditDeckModal(id) {
   document.getElementById('deck-title-input').value = deck.title;
   document.getElementById('deck-creator-input').value = deck.creator || '';
   document.getElementById('deck-color-input').value = deck.color || '#0066cc';
+
   openModal('modal-deck');
 }
-      openModal('modal-deck');
-    }
 
     function handleDeckSubmit(e) {
   e.preventDefault();
@@ -1808,7 +1813,7 @@ starIcon.classList.toggle('dark:text-slate-600', !isStarred);
     }
   </script>
   <script>
-  let currentDeckId = null;
+  
 
   // Update sync status indicator in your header
   document.getElementById('sync-text').innerText = "Cloud Firestore Synced";
