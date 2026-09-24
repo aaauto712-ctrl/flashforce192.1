@@ -494,6 +494,19 @@
     class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
   >
 </div>
+<div>
+  <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+    Deck Color
+  </label>
+  <input
+    type="color"
+    id="deck-color-input"
+    value="#0066cc"
+    class="w-full h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"
+  >
+</div>
+<div>
+  
             <div class="flex justify-end gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
               <button type="button" onclick="closeModal('modal-deck')" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
               <button type="submit" class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 shadow-md">Save Deck</button>
@@ -660,25 +673,21 @@ let uploadingBackImage = false;
 
     /* Initial Default Seed Data */
     const defaultDecks = [
+  {
+    id: "deck_demo_1",
+    title: "Carbohydrate Metabolism",
+    creator: "intouchlee",
+    color: "#0066cc",
+    cards: [
       {
-        id: "deck_demo_1",
-        title: "Carbohydrate Metabolism",
-        cards: [
-          {
-            id: "card_1",
-            front: "What is Glycolysis?",
-            back: "The metabolic pathway that converts glucose C₆H₁₂O₆ into pyruvate, yielding ATP and NADH.",
-            starred: false
-          },
-          {
-            id: "card_2",
-            front: "Where does the TCA Cycle occur?",
-            back: "In the mitochondrial matrix of eukaryotic cells.",
-            starred: true
-          }
-        ]
+        id: "card_1",
+        front: "What is Glycolysis?",
+        back: "The metabolic pathway that converts glucose C₆H₁₂O₆ into pyruvate, yielding ATP and NADH.",
+        starred: false
       }
-    ];
+    ]
+  }
+];
 
     document.addEventListener('DOMContentLoaded', () => {
   initTheme();
@@ -751,7 +760,41 @@ async function saveDecks() {
     updateSyncStatus('Save Error');
   }
 }
+function hexToRgba(hex, alpha) {
+  const clean = String(hex || '#0066cc').replace('#', '');
+  const full = clean.length === 3
+    ? clean.split('').map(c => c + c).join('')
+    : clean;
 
+  const num = parseInt(full, 16);
+
+  if (Number.isNaN(num)) {
+    return `rgba(0, 102, 204, ${alpha})`;
+  }
+
+  const r = (num >> 16) & 255;
+  const g = (num >> 8) & 255;
+  const b = num & 255;
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+function getDeckSurfaceColor(deckColor) {
+  const isDarkMode = document.documentElement.classList.contains('dark');
+
+  if (isDarkMode) {
+    return `linear-gradient(
+      135deg,
+      ${hexToRgba(deckColor, 0.28)},
+      rgba(15, 23, 42, 0.96)
+    )`;
+  }
+
+  return `linear-gradient(
+    135deg,
+    ${hexToRgba(deckColor, 0.16)},
+    rgba(255, 255, 255, 0.86)
+  )`;
+}
 function updateSyncStatus(message) {
   const syncText = document.getElementById('sync-text');
 
@@ -861,15 +904,22 @@ function updateSyncStatus(message) {
         return;
       }
 
-      container.innerHTML = filteredDecks.map(deck => `
-        <div class="group relative rounded-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-blue-200/80 dark:border-slate-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+      container.innerHTML = filteredDecks.map(deck => {
+  const deckColor = deck.color || '#0066cc';
+
+  return `
+        <div
+  class="group relative rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300"
+  style="background: linear-gradient(135deg, ${hexToRgba(deckColor, 0.18)}, rgba(255,255,255,0.82)); border: 1px solid ${hexToRgba(deckColor, 0.5)};"
+>
           <div>
             <div class="flex items-start justify-between gap-3 mb-3">
   <div class="min-w-0">
     <h3
-      onclick="openDeck('${deck.id}')"
-      class="font-bold text-lg text-slate-900 dark:text-slate-100 hover:text-brand-600 dark:hover:text-blue-400 cursor-pointer transition-colors break-words"
-    >
+  onclick="openDeck('${deck.id}')"
+  class="font-bold text-lg text-slate-900 dark:text-slate-100 cursor-pointer transition-colors break-words"
+  style="color: ${deckColor};"
+>
       ${escapeHtml(deck.title)}
     </h3>
 
@@ -914,7 +964,8 @@ function updateSyncStatus(message) {
             </button>
           </div>
         </div>
-      `).join('');
+        `;
+}).join('');
     }
 
     function openDeck(id) {
@@ -927,28 +978,59 @@ function updateSyncStatus(message) {
       currentDeckId = id;
       navigateTo('study');
     }
+function hexToRgba(hex, alpha) {
+  const clean = String(hex || '#0066cc').replace('#', '');
+  const full = clean.length === 3
+    ? clean.split('').map(c => c + c).join('')
+    : clean;
 
+  const num = parseInt(full, 16);
+
+  if (Number.isNaN(num)) {
+    return `rgba(0, 102, 204, ${alpha})`;
+  }
+
+  const r = (num >> 16) & 255;
+  const g = (num >> 8) & 255;
+  const b = num & 255;
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
     /* Deck Detail View */
     function renderDeckDetail() {
       const deck = decks.find(d => d.id === currentDeckId);
+      
       if (!deck) {
         navigateTo('library');
         return;
       }
+      const deckColor = deck.color || '#0066cc';
+      
 
       // Header details
       document.getElementById('deck-detail-header').innerHTML = `
-        <div>
-          <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${escapeHtml(deck.title)}</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${deck.cards.length} total cards in this collection</p>
-        </div>
-        <div class="flex items-center gap-3">
-          ${isAdmin ? `
-          <button onclick="openEditDeckModal('${deck.id}')" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold transition-all">Edit Title</button>
-          ` : ''}
-          <button onclick="navigateTo('study')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 text-white font-semibold text-xs shadow-lg shadow-brand-500/25 transition-all">Start Study Session</button>
-        </div>
-      `;
+  <div
+  class="p-6 rounded-2xl backdrop-blur-md shadow-xl flex flex-col md:flex-row md:items-center md:justify-between gap-4 border"
+  style="background: ${getDeckSurfaceColor(deckColor)}; border-color: ${hexToRgba(deckColor, 0.65)};"
+>
+    <div>
+      <h2
+        class="text-2xl font-bold text-slate-900 dark:text-slate-100"
+        style="color: ${deckColor};"
+      >
+        ${escapeHtml(deck.title)}
+      </h2>
+
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+        ${deck.cards.length} total cards in this collection
+      </p>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <!-- existing buttons stay here -->
+    </div>
+  </div>
+`;
 
       // Filter Counts
       const totalCount = deck.cards.length;
@@ -1049,21 +1131,37 @@ function updateSyncStatus(message) {
     }
 
     /* Deck Handlers */
-    function openNewDeckModal() {
-      if (!checkAdminPermission()) return;
-      document.getElementById('deck-modal-title').innerText = 'Create New Deck';
-      document.getElementById('deck-edit-id').value = '';
-      document.getElementById('deck-title-input').value = '';
-      function openNewDeckModal() {
+    /* Deck Handlers */
+function openNewDeckModal() {
   if (!checkAdminPermission()) return;
+
   document.getElementById('deck-modal-title').innerText = 'Create New Deck';
   document.getElementById('deck-edit-id').value = '';
   document.getElementById('deck-title-input').value = '';
   document.getElementById('deck-creator-input').value = '';
+
+  // Reset the color for a new deck
+  document.getElementById('deck-color-input').value = '#0066cc';
+
   openModal('modal-deck');
 }
-      openModal('modal-deck');
-    }
+
+function openEditDeckModal(id) {
+  if (!checkAdminPermission()) return;
+
+  const deck = decks.find(d => d.id === id);
+  if (!deck) return;
+
+  document.getElementById('deck-modal-title').innerText = 'Edit Deck';
+  document.getElementById('deck-edit-id').value = deck.id;
+  document.getElementById('deck-title-input').value = deck.title;
+  document.getElementById('deck-creator-input').value = deck.creator || '';
+
+  // Load the existing deck color
+  document.getElementById('deck-color-input').value = deck.color || '#0066cc';
+
+  openModal('modal-deck');
+}
 
     function openEditDeckModal(id) {
       if (!checkAdminPermission()) return;
@@ -1081,35 +1179,40 @@ function updateSyncStatus(message) {
   document.getElementById('deck-edit-id').value = deck.id;
   document.getElementById('deck-title-input').value = deck.title;
   document.getElementById('deck-creator-input').value = deck.creator || '';
+  document.getElementById('deck-color-input').value = deck.color || '#0066cc';
   openModal('modal-deck');
 }
       openModal('modal-deck');
     }
 
     function handleDeckSubmit(e) {
-      e.preventDefault();
-      if (!checkAdminPermission()) return;
+  e.preventDefault();
+  if (!checkAdminPermission()) return;
 
-      const editId = document.getElementById('deck-edit-id').value;
-      const title = document.getElementById('deck-title-input').value.trim();
-      const creator = document.getElementById('deck-creator-input').value.trim();
+  const editId = document.getElementById('deck-edit-id').value;
+  const title = document.getElementById('deck-title-input').value.trim();
+  const creator = document.getElementById('deck-creator-input').value.trim();
 
-      if (!title) return;
+  const colorInput = document.getElementById('deck-color-input');
+  const color = colorInput ? colorInput.value : '#0066cc';
+
+  if (!title) return;
 
       if (editId) {
   const deck = decks.find(d => d.id === editId);
   if (deck) {
     deck.title = title;
     deck.creator = creator;
+    deck.color = color;
   }
 } else {
-  const newDeck = {
-    id: 'deck_' + Date.now(),
-    title: title,
-    creator: creator,
-    cards: []
-  };
-  decks.push(newDeck);
+  decks.push({
+  id: `deck_${Date.now()}`,
+  title: title,
+  creator: creator,
+  color: color,
+  cards: []
+});
 }
 
       saveDecks();
@@ -1714,7 +1817,7 @@ starIcon.classList.toggle('dark:text-slate-600', !isStarred);
     event.preventDefault();
     const titleInput = document.getElementById('deck-title-input');
     const title = titleInput.value.trim();
-
+const color = document.getElementById('deck-color-input').value || '#0066cc';
     if (!title) return;
 
     try {
