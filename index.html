@@ -161,13 +161,13 @@
         <div class="flex items-center gap-2 sm:gap-3">
           <!-- Admin / Key Status Button -->
           <button 
-  type="button"
-  id="admin-auth-btn"
-  onclick="toggleAdminAuth()"
-  class="px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all border shadow-sm"
->
-  <!-- Rendered by JS -->
-</button>
+            type="button"
+            id="admin-auth-btn"
+            onclick="toggleAdminAuth()"
+            class="px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all border shadow-sm"
+          >
+            <!-- Rendered by JS -->
+          </button>
 
           <!-- Sync Status Badge -->
           <div id="sync-status" class="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border border-emerald-500/30">
@@ -182,11 +182,9 @@
             class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200/80 dark:border-slate-700/80 shadow-sm"
             title="Toggle Light / Dark Mode"
           >
-            <!-- Sun Icon -->
             <svg id="theme-sun-icon" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 16.5a4.5 4.5 0 100-9 4.5 4.5 0 000 9z"/>
             </svg>
-            <!-- Moon Icon -->
             <svg id="theme-moon-icon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
             </svg>
@@ -209,7 +207,7 @@
           <div class="flex flex-wrap items-center gap-3">
             <button 
               onclick="openNewDeckModal()"
-              class="admin-only px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 text-white font-medium text-sm flex items-center gap-2 shadow-lg shadow-brand-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              class="admin-only px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 text-white font-medium text-sm flex items-center gap-2 shadow-md"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -231,7 +229,7 @@
         <div class="flex items-center gap-3">
           <button 
             onclick="navigateTo('library')"
-            class="p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all shadow-sm"
+            class="p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
             title="Back to Library"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -242,7 +240,7 @@
         </div>
 
         <!-- Selected Deck Header Details -->
-        <div id="deck-detail-header" class="p-6 rounded-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-blue-200/80 dark:border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6 transition-colors duration-300">
+        <div id="deck-detail-header" class="p-6 rounded-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-blue-200/80 dark:border-slate-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
           <!-- Populated by JS -->
         </div>
 
@@ -262,7 +260,7 @@
               class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all flex items-center gap-1.5"
             >
               <svg class="w-3.5 h-3.5 text-amber-400 fill-amber-400" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.118 0l-2.8 2.034c-.785.57-1.84-.197-1.54-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.216 8.71c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/>
               </svg>
               Starred (<span id="count-starred-cards">0</span>)
             </button>
@@ -271,7 +269,7 @@
           <div class="flex items-center gap-2">
             <button 
               onclick="openCSVImportModal()"
-              class="admin-only px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-medium text-xs flex items-center gap-2 shadow-sm transition-all"
+              class="admin-only px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
             >
               <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
@@ -281,7 +279,7 @@
 
             <button 
               onclick="openAddCardModal()"
-              class="admin-only px-4 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 text-white font-medium text-xs flex items-center gap-2 shadow-md shadow-brand-500/20 transition-all transform hover:-translate-y-0.5"
+              class="admin-only px-4 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 text-white font-medium text-xs flex items-center gap-2 shadow-md"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -304,7 +302,7 @@
           <div class="flex items-center gap-3">
             <button 
               onclick="navigateTo('deck')"
-              class="px-3 py-1.5 rounded-xl bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all"
+              class="px-3 py-1.5 rounded-xl bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 text-xs font-semibold flex items-center gap-2"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -317,24 +315,25 @@
           <!-- Study Options -->
           <div class="flex items-center gap-2">
             <button 
-  onclick="toggleStudyShuffle()"
-  id="study-shuffle-btn"
-  class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-brand-500 transition-all flex items-center"
-  title="Shuffle Deck during Study"
->
-  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h2m8 0h2a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4 0l3-3m0 0l-3-3m3 3H8"/>
-  </svg>
-  <span>Shuffle Deck</span>
-</button>
+              onclick="toggleStudyShuffle()"
+              id="study-shuffle-btn"
+              class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:text-brand-500 transition-all flex items-center"
+              title="Shuffle Deck during Study"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h2m8 0h2a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4 0l3-3m0 0l-3-3m3 3H8"/>
+              </svg>
+              <span>Shuffle Deck</span>
+            </button>
 
-<button 
-  onclick="toggleStudyStarredOnly()"
-  id="study-starred-btn"
-  class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
->
-  Starred Only
-</button>
+            <button 
+              onclick="toggleStudyStarredOnly()"
+              id="study-starred-btn"
+              class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+            >
+              Starred Only
+            </button>
+
             <button 
               onclick="toggleFrontFirstMode()"
               id="study-flip-side-btn"
@@ -365,9 +364,9 @@
             <div id="3d-card-inner" class="transform-style-3d relative w-full h-full rounded-3xl transition-transform duration-500 shadow-2xl">
               
               <!-- Front Side Face -->
-              <div class="backface-hidden absolute inset-0 w-full h-full rounded-3xl p-8 sm:p-10 bg-white dark:bg-slate-900 border-2 border-blue-200 dark:border-blue-900/50 shadow-xl flex flex-col justify-between transition-colors duration-300">
+              <div class="backface-hidden absolute inset-0 w-full h-full rounded-3xl p-8 sm:p-10 bg-white dark:bg-slate-900 border-2 border-blue-200 dark:border-blue-900/50 shadow-xl flex flex-col justify-between">
                 <div class="flex justify-between items-center">
-                  <span class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-blue-950/60 px-3 py-1 rounded-full border border-brand-200 dark:border-blue-800/50">
+                  <span class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-blue-950/60 px-3 py-1 rounded-full border border-brand-200 dark:border-blue-800/80">
                     Front
                   </span>
                   <button 
@@ -375,7 +374,7 @@
                     class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
                   >
                     <svg id="study-star-icon" class="w-6 h-6 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.9 2.835a1 1 0 00-.364 1.118l1.519 4.674c.3.921-.755 1.688-1.54 1.118l-3.9-2.835a1 1 0 00-1.176 0l-3.9 2.835c-.785.57-1.84-.197-1.54-1.118l1.519-4.674a1 1 0 00-.364-1.118L2.03 9.401c-.783-.57-.38-1.81.588-1.81h4.915a1 1 0 00.95-.69l1.519-4.674z"/>
                     </svg>
                   </button>
                 </div>
@@ -394,8 +393,8 @@
                 </div>
               </div>
 
-              <!-- Back Side Face (Updated Light/Dark Mode Styling) -->
-              <div class="backface-hidden rotate-y-180 absolute inset-0 w-full h-full rounded-3xl p-8 sm:p-10 bg-blue-50/90 text-slate-900 dark:bg-slate-900 dark:text-white border-2 border-brand-500/50 shadow-xl flex flex-col justify-between transition-colors duration-300">
+              <!-- Back Side Face -->
+              <div class="backface-hidden rotate-y-180 absolute inset-0 w-full h-full rounded-3xl p-8 sm:p-10 bg-blue-50/90 text-slate-900 dark:bg-slate-900 dark:text-white border-2 border-brand-500/50 shadow-xl flex flex-col justify-between">
                 <div class="flex justify-between items-center">
                   <span class="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-200/80 dark:text-amber-400 dark:bg-amber-500/20 px-3 py-1 rounded-full border border-blue-300 dark:border-amber-500/30">
                     Back (Answer)
@@ -424,7 +423,7 @@
           <div class="flex items-center gap-3 w-full sm:w-auto justify-center">
             <button 
               onclick="prevStudyCard()"
-              class="flex-1 sm:flex-initial px-5 py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 font-semibold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+              class="flex-1 sm:flex-initial px-5 py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 font-semibold text-sm flex items-center justify-center gap-2"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -434,14 +433,14 @@
 
             <button 
               onclick="flipStudyCard()"
-              class="px-5 py-3 rounded-2xl bg-slate-200/80 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold text-sm flex items-center justify-center gap-1.5 shadow-sm transition-all"
+              class="px-5 py-3 rounded-2xl bg-slate-200/80 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold text-sm flex items-center justify-center"
             >
               Flip Card
             </button>
 
             <button 
               onclick="nextStudyCard()"
-              class="flex-1 sm:flex-initial px-5 py-3 rounded-2xl bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-md shadow-brand-500/25 transition-all active:scale-95"
+              class="flex-1 sm:flex-initial px-5 py-3 rounded-2xl bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 text-white font-semibold text-sm flex items-center justify-center gap-2"
             >
               Next
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -462,7 +461,6 @@
           <span>&bull; by intouchlee </span>
         </div>
         <div>
-          
         </div>
       </div>
     </footer>
@@ -482,32 +480,17 @@
             <input type="hidden" id="deck-edit-id" value="">
             <div>
               <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Deck Title *</label>
-              <input type="text" id="deck-title-input" required placeholder="e.g. carbohydrate metabolism" class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:outline-none">
+              <input type="text" id="deck-title-input" required placeholder="e.g. carbohydrate metabolism" class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50"/>
             </div>
-<div>
-  <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-    Creator
-  </label>
-  <input
-    type="text"
-    id="deck-creator-input"
-    placeholder="e.g. intouchlee"
-    class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
-  >
-</div>
-<div>
-  <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-    Deck Color
-  </label>
-  <input
-    type="color"
-    id="deck-color-input"
-    value="#0066cc"
-    class="w-full h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"
-  >
-</div>
-<div>
-  
+            <div>
+              <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Creator</label>
+              <input type="text" id="deck-creator-input" placeholder="e.g. intouchlee" class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50"/>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Deck Color</label>
+              <input type="color" id="deck-color-input" value="#0066cc" class="w-full h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"/>
+            </div>
+
             <div class="flex justify-end gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
               <button type="button" onclick="closeModal('modal-deck')" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
               <button type="submit" class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 shadow-md">Save Deck</button>
@@ -537,22 +520,22 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
               <div>
                 <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Front (Question / Term)</label>
-                <textarea id="card-front-input" rows="5" placeholder="Text supports standard formatting, lists, line breaks, HTML tags like <br>, <b>, etc." class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:outline-none"></textarea>
+                <textarea id="card-front-input" rows="5" placeholder="Text supports standard formatting, lists, line breaks, HTML tags like <br>, <b>, etc." class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50"></textarea>
                 <div class="mt-2 flex items-center gap-2">
-                  <label for="card-front-image-input" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">Add Front Image</label>
+                  <label for="card-front-image-input" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Add Image</label>
                   <input type="file" id="card-front-image-input" accept="image/*" onchange="handleImageUpload(event, 'front')" class="sr-only">
-                  <button type="button" id="remove-front-image-btn" onclick="removeCardImage('front')" class="hidden px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 text-xs font-semibold">Remove Image</button>
+                  <button type="button" id="remove-front-image-btn" onclick="removeCardImage('front')" class="hidden px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-300 text-xs font-semibold">Remove</button>
                 </div>
                 <div id="front-image-preview" class="hidden mt-2 max-h-36 rounded-xl overflow-auto border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2"></div>
               </div>
 
               <div>
                 <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Back (Answer / Definition)</label>
-                <textarea id="card-back-input" rows="5" placeholder="Text supports standard formatting, lists, line breaks, HTML tags like <br>, <b>, etc." class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:outline-none"></textarea>
+                <textarea id="card-back-input" rows="5" placeholder="Text supports standard formatting, lists, line breaks, HTML tags like <br>, <b>, etc." class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50"></textarea>
                 <div class="mt-2 flex items-center gap-2">
-                  <label for="card-back-image-input" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">Add Back Image</label>
+                  <label for="card-back-image-input" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">Add Image</label>
                   <input type="file" id="card-back-image-input" accept="image/*" onchange="handleImageUpload(event, 'back')" class="sr-only">
-                  <button type="button" id="remove-back-image-btn" onclick="removeCardImage('back')" class="hidden px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 text-xs font-semibold">Remove Image</button>
+                  <button type="button" id="remove-back-image-btn" onclick="removeCardImage('back')" class="hidden px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-300 text-xs font-semibold">Remove</button>
                 </div>
                 <div id="back-image-preview" class="hidden mt-2 max-h-36 rounded-xl overflow-auto border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2"></div>
               </div>
@@ -565,7 +548,7 @@
               </label>
 
               <div class="flex gap-2">
-                <button type="button" onclick="closeModal('modal-card')" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Done</button>
+                <button type="button" onclick="closeModal('modal-card')" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
                 <button type="submit" class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 shadow-md">Add Card</button>
               </div>
             </div>
@@ -603,7 +586,7 @@
 
           <div class="flex justify-end gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
             <button type="button" onclick="closeModal('modal-csv')" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
-            <button type="button" onclick="importCSVData()" class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 shadow-md">Import Cards</button>
+            <button type="button" onclick="importCSVData()" class="px-5 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 shadow-md">Import Data</button>
           </div>
         </div>
       </div>
@@ -633,7 +616,7 @@
                 id="auth-key-input" 
                 placeholder="Enter passcode key..." 
                 required 
-                class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                class="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50"
               >
               <p id="auth-error-msg" class="text-xs text-blue-500 mt-1.5 hidden font-medium">Incorrect key. Please try again.</p>
             </div>
@@ -657,7 +640,7 @@
     /* Application State */
     let decks = [];
     let currentDeckId = null;
-    let cardFilter = 'all'; // 'all' or 'starred'
+    let cardFilter = 'all';
     let searchQuery = '';
     let studyCards = [];
     let studyIndex = 0;
@@ -666,151 +649,144 @@
     let isShuffled = false;
     let studyStarredOnly = false;
     let tempFrontImg = '';
-let tempBackImg = '';
-let uploadingFrontImage = false;
-let uploadingBackImage = false;
+    let tempBackImg = '';
+    let uploadingFrontImage = false;
+    let uploadingBackImage = false;
     let tempCSVContent = '';
     let isAdmin = localStorage.getItem('flashforce_is_admin') === 'true';
 
-    /* Initial Default Seed Data */
     const defaultDecks = [
-  {
-    id: "deck_demo_1",
-    title: "Carbohydrate Metabolism",
-    creator: "intouchlee",
-    color: "#0066cc",
-    cards: [
       {
-        id: "card_1",
-        front: "What is Glycolysis?",
-        back: "The metabolic pathway that converts glucose C₆H₁₂O₆ into pyruvate, yielding ATP and NADH.",
-        starred: false
+        id: "deck_demo_1",
+        title: "Carbohydrate Metabolism",
+        creator: "intouchlee",
+        color: "#0066cc",
+        cards: [
+          {
+            id: "card_1",
+            front: "What is Glycolysis?",
+            back: "The metabolic pathway that converts glucose C₆H₁₂O₆ into pyruvate, yielding ATP and NADH.",
+            starred: false
+          }
+        ]
       }
-    ]
-  }
-];
+    ];
 
     document.addEventListener('DOMContentLoaded', () => {
-  initTheme();
-  updateAdminUI();
-  setupKeyboardShortcuts();
+      initTheme();
+      updateAdminUI();
+      setupKeyboardShortcuts();
+      initAuth();
+      initData();
 
-  initAuth();
-  initData();
-});
-
-function initAuth() {
-  auth.signInAnonymously()
-    .then(() => {
-      console.log('Signed in anonymously');
-    })
-    .catch(error => {
-      console.error('Anonymous sign-in failed:', error);
-      updateSyncStatus('Authentication Error');
+      const adminBtn = document.getElementById('admin-auth-btn');
+      if (adminBtn) {
+        adminBtn.addEventListener('click', toggleAdminAuth);
+      }
     });
-}
 
-function initData() {
-  updateSyncStatus('Connecting...');
+    function initAuth() {
+      auth.signInAnonymously()
+        .then(() => {
+          console.log('Signed in anonymously');
+        })
+        .catch(error => {
+          console.error('Anonymous sign-in failed:', error);
+          updateSyncStatus('Authentication Error');
+        });
+    }
 
-  db.collection('flashforce')
-    .doc('content')
-    .onSnapshot(
-      snapshot => {
-        if (snapshot.exists && Array.isArray(snapshot.data().decks)) {
-          decks = snapshot.data().decks;
-        } else {
-          decks = defaultDecks;
+    function initData() {
+      updateSyncStatus('Connecting...');
 
-          // Creates the first cloud copy.
-          // Only keep this if your Firestore rules permit the current user to write.
-          if (isAdmin) {
-            saveDecks();
+      db.collection('flashforce')
+        .doc('content')
+        .onSnapshot(
+          snapshot => {
+            if (snapshot.exists && Array.isArray(snapshot.data().decks)) {
+              decks = snapshot.data().decks;
+            } else {
+              decks = defaultDecks;
+
+              if (isAdmin) {
+                saveDecks();
+              }
+            }
+
+            updateSyncStatus('Cloud Synced');
+
+            if (currentDeckId) {
+              renderDeckDetail();
+            } else {
+              renderLibrary();
+            }
+          },
+          error => {
+            console.error('Firestore listener error:', error);
+            updateSyncStatus('Sync Error');
           }
-        }
+        );
+    }
+
+    async function saveDecks() {
+      try {
+        updateSyncStatus('Saving...');
+
+        await db.collection('flashforce')
+          .doc('content')
+          .set({
+            decks: decks,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
 
         updateSyncStatus('Cloud Synced');
-
-        if (currentDeckId) {
-          renderDeckDetail();
-        } else {
-          renderLibrary();
-        }
-      },
-      error => {
-        console.error('Firestore listener error:', error);
-        updateSyncStatus('Sync Error');
+      } catch (error) {
+        console.error('Could not save decks:', error);
+        updateSyncStatus('Save Error');
       }
-    );
-}
+    }
 
-async function saveDecks() {
-  try {
-    updateSyncStatus('Saving...');
+    function hexToRgba(hex, alpha) {
+      const clean = String(hex || '#0066cc').replace('#', '');
+      const full = clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean;
+      const num = parseInt(full, 16);
 
-    await db.collection('flashforce')
-      .doc('content')
-      .set({
-        decks: decks,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      if (Number.isNaN(num)) {
+        return `rgba(0, 102, 204, ${alpha})`;
+      }
 
-    updateSyncStatus('Cloud Synced');
-  } catch (error) {
-    console.error('Could not save decks:', error);
-    updateSyncStatus('Save Error');
-  }
-}
-function hexToRgba(hex, alpha) {
-  const clean = String(hex || '#0066cc').replace('#', '');
-  const full = clean.length === 3
-    ? clean.split('').map(c => c + c).join('')
-    : clean;
+      const r = (num >> 16) & 255;
+      const g = (num >> 8) & 255;
+      const b = num & 255;
 
-  const num = parseInt(full, 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
 
-  if (Number.isNaN(num)) {
-    return `rgba(0, 102, 204, ${alpha})`;
-  }
+    function getDeckSurfaceColor(deckColor) {
+      if (document.documentElement.classList.contains('dark')) {
+        return `linear-gradient(135deg, ${hexToRgba(deckColor, 0.28)}, rgba(15, 23, 42, 0.96))`;
+      }
 
-  const r = (num >> 16) & 255;
-  const g = (num >> 8) & 255;
-  const b = num & 255;
+      return `linear-gradient(135deg, ${hexToRgba(deckColor, 0.16)}, rgba(255, 255, 255, 0.86))`;
+    }
 
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-function getDeckSurfaceColor(deckColor) {
-  if (document.documentElement.classList.contains('dark')) {
-    return `linear-gradient(
-      135deg,
-      ${hexToRgba(deckColor, 0.28)},
-      rgba(15, 23, 42, 0.96)
-    )`;
-  }
+    function updateSyncStatus(message) {
+      const syncText = document.getElementById('sync-text');
+      if (syncText) {
+        syncText.textContent = message;
+      }
+    }
 
-  return `linear-gradient(
-    135deg,
-    ${hexToRgba(deckColor, 0.16)},
-    rgba(255, 255, 255, 0.86)
-  )`;
-}
-function updateSyncStatus(message) {
-  const syncText = document.getElementById('sync-text');
-
-  if (syncText) {
-    syncText.textContent = message;
-  }
-}
-
-    /* Admin Authorization Logic */
     function updateAdminUI() {
       const btn = document.getElementById('admin-auth-btn');
       const adminElements = document.querySelectorAll('.admin-only');
 
+      if (!btn) return;
+
       if (isAdmin) {
-        btn.className = "px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20";
+        btn.className = "px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border border-emerald-500/30 shadow-sm";
         btn.innerHTML = `
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           <span>Admin Mode</span>
         `;
         adminElements.forEach(el => el.classList.remove('hidden'));
@@ -832,66 +808,53 @@ function updateSyncStatus(message) {
       return true;
     }
 
-   function toggleAdminAuth() {
-  if (isAdmin) {
-    isAdmin = false;
-    localStorage.setItem('flashforce_is_admin', 'false');
-    updateAdminUI();
+    function toggleAdminAuth() {
+      if (isAdmin) {
+        isAdmin = false;
+        localStorage.setItem('flashforce_is_admin', 'false');
+        updateAdminUI();
+        if (currentDeckId) renderDeckDetail();
+        else renderLibrary();
+        return;
+      }
 
-    if (currentDeckId) {
-      renderDeckDetail();
-    } else {
-      renderLibrary();
+      const authModal = document.getElementById('modal-auth');
+      if (!authModal) {
+        console.error('The modal-auth element was not found.');
+        return;
+      }
+
+      authModal.classList.remove('hidden');
+      const keyInput = document.getElementById('auth-key-input');
+      if (keyInput) keyInput.focus();
     }
-
-    return;
-  }
-
-  const authModal = document.getElementById('modal-auth');
-
-  if (!authModal) {
-    console.error('The modal-auth element was not found.');
-    return;
-  }
-
-  authModal.classList.remove('hidden');
-
-  const keyInput = document.getElementById('auth-key-input');
-  if (keyInput) {
-    keyInput.focus();
-  }
-}
 
     function handleAuthSubmit(event) {
-  event.preventDefault();
+      event.preventDefault();
 
-  const input = document.getElementById('auth-key-input');
-  const errorMessage = document.getElementById('auth-error-msg');
+      const input = document.getElementById('auth-key-input');
+      const errorMessage = document.getElementById('auth-error-msg');
 
-  if (!input || !errorMessage) return;
+      if (!input || !errorMessage) return;
 
-  if (input.value.trim() === ADMIN_KEY) {
-    isAdmin = true;
-    localStorage.setItem('flashforce_is_admin', 'true');
+      if (input.value.trim() === ADMIN_KEY) {
+        isAdmin = true;
+        localStorage.setItem('flashforce_is_admin', 'true');
 
-    input.value = '';
-    errorMessage.classList.add('hidden');
+        input.value = '';
+        errorMessage.classList.add('hidden');
 
-    closeModal('modal-auth');
-    updateAdminUI();
+        closeModal('modal-auth');
+        updateAdminUI();
 
-    if (currentDeckId) {
-      renderDeckDetail();
-    } else {
-      renderLibrary();
+        if (currentDeckId) renderDeckDetail();
+        else renderLibrary();
+      } else {
+        errorMessage.classList.remove('hidden');
+        input.select();
+      }
     }
-  } else {
-    errorMessage.classList.remove('hidden');
-    input.select();
-  }
-}
 
-    /* Navigation */
     function navigateTo(view) {
       document.getElementById('view-library').classList.add('hidden');
       document.getElementById('view-deck').classList.add('hidden');
@@ -910,9 +873,10 @@ function updateSyncStatus(message) {
       }
     }
 
-    /* Render Library View */
     function renderLibrary() {
       const container = document.getElementById('decks-container');
+      if (!container) return;
+
       const filteredDecks = decks.filter(d => 
         d.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         d.cards.some(c => c.front.toLowerCase().includes(searchQuery.toLowerCase()) || c.back.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -922,7 +886,7 @@ function updateSyncStatus(message) {
         container.innerHTML = `
           <div class="col-span-full py-16 text-center space-y-3">
             <div class="w-16 h-16 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
-              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0a2 2 0 00-2-2H7a2 2 0 00-2 2m14 0H5"/></svg>
             </div>
             <p class="text-base font-semibold text-slate-700 dark:text-slate-300">No flashcard decks found</p>
             <p class="text-xs text-slate-500">Create a deck or try a different search term.</p>
@@ -932,67 +896,38 @@ function updateSyncStatus(message) {
       }
 
       container.innerHTML = filteredDecks.map(deck => {
-  const deckColor = deck.color || '#0066cc';
+        const deckColor = deck.color || '#0066cc';
 
-  return `
-        <div
-  class="group relative rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300"
-  style="background: ${getDeckSurfaceColor(deckColor)}; border: 1px solid ${hexToRgba(deckColor, 0.5)};"
->
-          <div>
-            <div class="flex items-start justify-between gap-3 mb-3">
-  <div class="min-w-0">
-    <h3
-  onclick="openDeck('${deck.id}')"
-  class="font-bold text-lg text-slate-900 dark:text-slate-100 cursor-pointer transition-colors break-words"
-  style="color: ${deckColor};"
->
-      ${escapeHtml(deck.title)}
-    </h3>
+        return `
+          <div class="group relative rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300" style="background: ${getDeckSurfaceColor(deckColor)}; border: 1px solid ${hexToRgba(deckColor, 0.5)};">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <div class="min-w-0">
+                  <h3 onclick="openDeck('${deck.id}')" class="font-bold text-lg text-slate-900 dark:text-slate-100 cursor-pointer transition-colors break-words" style="color: ${deckColor};">${escapeHtml(deck.title)}</h3>
+                  <p class="mt-1 text-xs font-normal text-slate-400 dark:text-slate-500">made by ${escapeHtml(deck.creator || 'Unknown')}</p>
+                </div>
 
-    <p class="mt-1 text-xs font-normal text-slate-400 dark:text-slate-500">
-      made by ${escapeHtml(deck.creator || 'Unknown')}
-    </p>
-  </div>
+                ${isAdmin ? `
+                  <div class="flex items-center gap-1 shrink-0">
+                    <button onclick="openEditDeckModal('${deck.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all" title="Edit Deck">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.5-9.5a2.121 2.121 0 113 3L11 18l-4 1 1-4 7.5-7.5z"/></svg>
+                    </button>
+                    <button onclick="deleteDeck('${deck.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-all" title="Delete Deck">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M3 7h18M8 7V4a1 1 0 011-1h6a1 1 0 011 1v3"/></svg>
+                    </button>
+                  </div>
+                ` : ''}
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mb-4">${deck.cards.length} Card${deck.cards.length === 1 ? '' : 's'}</p>
+            </div>
 
-  ${isAdmin ? `
-  <div class="flex items-center gap-1 shrink-0">
-    <button
-      onclick="openEditDeckModal('${deck.id}')"
-      class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
-      title="Edit Deck"
-    >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.5-9.5a2.121 2.121 0 113 3L11 18l-4 1 1-4 7.5-7.5z"/>
-      </svg>
-    </button>
-
-    <button
-      onclick="deleteDeck('${deck.id}')"
-      class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-all"
-      title="Delete Deck"
-    >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M3 7h18M8 7V4a1 1 0 011-1h6a1 1 0 011 1v3"/>
-      </svg>
-    </button>
-  </div>
-  ` : ''}
-</div>
-            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mb-4">${deck.cards.length} Card${deck.cards.length === 1 ? '' : 's'}</p>
+            <div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800/80">
+              <button onclick="openDeck('${deck.id}')" class="flex-1 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold text-sm">View Cards</button>
+              <button onclick="startDeckStudy('${deck.id}')" class="flex-1 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 text-white font-semibold text-sm">Study Now</button>
+            </div>
           </div>
-
-          <div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800/80">
-            <button onclick="openDeck('${deck.id}')" class="flex-1 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold text-xs transition-all">
-              View Cards
-            </button>
-            <button onclick="startDeckStudy('${deck.id}')" class="flex-1 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 text-white font-semibold text-xs shadow-md shadow-brand-500/20 transition-all">
-              Study Now
-            </button>
-          </div>
-        </div>
         `;
-}).join('');
+      }).join('');
     }
 
     function openDeck(id) {
@@ -1005,218 +940,69 @@ function updateSyncStatus(message) {
       currentDeckId = id;
       navigateTo('study');
     }
-function hexToRgba(hex, alpha) {
-  const clean = String(hex || '#0066cc').replace('#', '');
-  const full = clean.length === 3
-    ? clean.split('').map(c => c + c).join('')
-    : clean;
 
-  const num = parseInt(full, 16);
-
-  if (Number.isNaN(num)) {
-    return `rgba(0, 102, 204, ${alpha})`;
-  }
-
-  const r = (num >> 16) & 255;
-  const g = (num >> 8) & 255;
-  const b = num & 255;
-
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-    /* Deck Detail View */
-    function renderDeckDetail() {
-      const deck = decks.find(d => d.id === currentDeckId);
-      
-      if (!deck) {
-        navigateTo('library');
-        return;
-      }
-      const deckColor = deck.color || '#0066cc';
-      
-
-      // Header details
-      document.getElementById('deck-detail-header').innerHTML = `
-  <div
-  class="p-6 rounded-2xl backdrop-blur-md shadow-xl flex flex-col md:flex-row md:items-center md:justify-between gap-4 border"
-  style="background: ${getDeckSurfaceColor(deckColor)}; border-color: ${hexToRgba(deckColor, 0.65)};"
->
-    <div>
-      <h2
-        class="text-2xl font-bold text-slate-900 dark:text-slate-100"
-        style="color: ${deckColor};"
-      >
-        ${escapeHtml(deck.title)}
-      </h2>
-
-      <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-        ${deck.cards.length} total cards in this collection
-      </p>
-    </div>
-
-    <div class="flex items-center gap-3">
-      <!-- existing buttons stay here -->
-    </div>
-  </div>
-`;
-
-      // Filter Counts
-      const totalCount = deck.cards.length;
-      const starredCount = deck.cards.filter(c => c.starred).length;
-      document.getElementById('count-all-cards').innerText = totalCount;
-      document.getElementById('count-starred-cards').innerText = starredCount;
-
-      // Cards Grid
-      let cards = deck.cards;
-      if (cardFilter === 'starred') {
-        cards = cards.filter(c => c.starred);
-      }
-      if (searchQuery.trim()) {
-        cards = cards.filter(c => 
-          c.front.toLowerCase().includes(searchQuery.toLowerCase()) || 
-          c.back.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-      }
-
-      const container = document.getElementById('cards-container');
-      if (cards.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full py-16 text-center space-y-3">
-            <p class="text-sm font-semibold text-slate-600 dark:text-slate-400">No cards found in this view</p>
-            ${isAdmin ? `<button onclick="openAddCardModal()" class="text-xs font-bold text-brand-600 dark:text-blue-400 hover:underline">+ Add First Flashcard</button>` : ''}
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = cards.map(card => `
-        <div class="rounded-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-blue-200/80 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-4">
-          <div class="space-y-3">
-            <div class="flex justify-between items-start gap-2">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-blue-950/50 px-2.5 py-0.5 rounded-full border border-brand-200 dark:border-blue-900/50">Card</span>
-              <button onclick="toggleStarCard('${card.id}')" class="p-1 rounded-full text-slate-300 dark:text-slate-600 hover:text-amber-400 transition-colors">
-                <svg class="w-5 h-5 ${card.starred ? 'text-amber-400 fill-amber-400' : ''}" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-              </button>
-            </div>
-
-            <div class="text-sm font-semibold text-slate-900 dark:text-slate-100 leading-snug line-clamp-3">
-              ${card.front}
-            </div>
-            ${card.frontImage ? `<img src="${card.frontImage}" class="rounded-xl max-h-32 object-cover border border-slate-200 dark:border-slate-800">` : ''}
-
-            <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 line-clamp-3">
-              ${card.back}
-            </div>
-            ${card.backImage ? `<img src="${card.backImage}" class="rounded-xl max-h-32 object-cover border border-slate-200 dark:border-slate-800">` : ''}
-          </div>
-
-          ${isAdmin ? `
-          <div class="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-            <button onclick="openEditCardModal('${card.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-            </button>
-            <button onclick="deleteCard('${card.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-            </button>
-          </div>
-          ` : ''}
-        </div>
-      `).join('');
-    }
-
-    function setCardFilter(filter) {
-      cardFilter = filter;
-      document.getElementById('filter-btn-all').className = filter === 'all' 
-        ? "px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-500 text-white shadow-sm transition-all"
-        : "px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all";
-
-      document.getElementById('filter-btn-starred').className = filter === 'starred'
-        ? "px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-brand-500 text-white shadow-sm transition-all flex items-center gap-1.5"
-        : "px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all flex items-center gap-1.5";
-
-      renderDeckDetail();
-    }
-
-    /* Search Handler */
-    function handleSearch(val) {
-      searchQuery = val;
-      if (currentDeckId) {
-        renderDeckDetail();
-      } else {
-        renderLibrary();
-      }
-    }
-
-    /* Modal Controls */
     function openModal(id) {
-      document.getElementById(id).classList.remove('hidden');
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('hidden');
     }
 
     function closeModal(id) {
-      document.getElementById(id).classList.add('hidden');
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('hidden');
     }
 
-    /* Deck Handlers */
-    /* Deck Handlers */
-function openNewDeckModal() {
-  if (!checkAdminPermission()) return;
+    function openNewDeckModal() {
+      if (!checkAdminPermission()) return;
 
-  document.getElementById('deck-modal-title').innerText = 'Create New Deck';
-  document.getElementById('deck-edit-id').value = '';
-  document.getElementById('deck-title-input').value = '';
-  document.getElementById('deck-creator-input').value = '';
+      document.getElementById('deck-modal-title').innerText = 'Create New Deck';
+      document.getElementById('deck-edit-id').value = '';
+      document.getElementById('deck-title-input').value = '';
+      document.getElementById('deck-creator-input').value = '';
+      document.getElementById('deck-color-input').value = '#0066cc';
+      openModal('modal-deck');
+    }
 
-  // Reset the color for a new deck
-  document.getElementById('deck-color-input').value = '#0066cc';
+    function openEditDeckModal(id) {
+      if (!checkAdminPermission()) return;
 
-  openModal('modal-deck');
-}
+      const deck = decks.find(d => d.id === id);
+      if (!deck) return;
 
-function openEditDeckModal(id) {
-  if (!checkAdminPermission()) return;
-
-  const deck = decks.find(deck => deck.id === id);
-  if (!deck) return;
-
-  document.getElementById('deck-modal-title').innerText = 'Edit Deck';
-  document.getElementById('deck-edit-id').value = deck.id;
-  document.getElementById('deck-title-input').value = deck.title;
-  document.getElementById('deck-creator-input').value = deck.creator || '';
-  document.getElementById('deck-color-input').value = deck.color || '#0066cc';
-
-  openModal('modal-deck');
-}
+      document.getElementById('deck-modal-title').innerText = 'Edit Deck';
+      document.getElementById('deck-edit-id').value = deck.id;
+      document.getElementById('deck-title-input').value = deck.title;
+      document.getElementById('deck-creator-input').value = deck.creator || '';
+      document.getElementById('deck-color-input').value = deck.color || '#0066cc';
+      openModal('modal-deck');
+    }
 
     function handleDeckSubmit(e) {
-  e.preventDefault();
-  if (!checkAdminPermission()) return;
+      e.preventDefault();
+      if (!checkAdminPermission()) return;
 
-  const editId = document.getElementById('deck-edit-id').value;
-  const title = document.getElementById('deck-title-input').value.trim();
-  const creator = document.getElementById('deck-creator-input').value.trim();
+      const editId = document.getElementById('deck-edit-id').value;
+      const title = document.getElementById('deck-title-input').value.trim();
+      const creator = document.getElementById('deck-creator-input').value.trim();
+      const color = document.getElementById('deck-color-input').value || '#0066cc';
 
-  const colorInput = document.getElementById('deck-color-input');
-  const color = colorInput ? colorInput.value : '#0066cc';
-
-  if (!title) return;
+      if (!title) return;
 
       if (editId) {
-  const deck = decks.find(d => d.id === editId);
-  if (deck) {
-    deck.title = title;
-    deck.creator = creator;
-    deck.color = color;
-  }
-} else {
-  decks.push({
-  id: `deck_${Date.now()}`,
-  title: title,
-  creator: creator,
-  color: color,
-  cards: []
-});
-}
+        const deck = decks.find(d => d.id === editId);
+        if (deck) {
+          deck.title = title;
+          deck.creator = creator;
+          deck.color = color;
+        }
+      } else {
+        decks.push({
+          id: `deck_${Date.now()}`,
+          title,
+          creator,
+          color,
+          cards: []
+        });
+      }
 
       saveDecks();
       closeModal('modal-deck');
@@ -1229,720 +1015,388 @@ function openEditDeckModal(id) {
       if (confirm('Are you sure you want to delete this deck?')) {
         decks = decks.filter(d => d.id !== id);
         saveDecks();
-        if (currentDeckId === id) navigateTo('library');
-        else renderLibrary();
+        if (currentDeckId === id) {
+          currentDeckId = null;
+          renderLibrary();
+        } else {
+          renderLibrary();
+        }
       }
     }
 
-    /* Card Handlers */
+    function renderDeckDetail() {
+      const deck = decks.find(d => d.id === currentDeckId);
+      const container = document.getElementById('cards-container');
+      const header = document.getElementById('deck-detail-header');
+      if (!deck || !header || !container) return;
+
+      const allCards = deck.cards || [];
+      const filteredCards = cardFilter === 'starred' ? allCards.filter(card => card.starred) : allCards;
+
+      header.innerHTML = `
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl shadow-md" style="background: linear-gradient(135deg, ${hexToRgba(deck.color || '#0066cc', 0.35)}, rgba(15,23,42,0.9));"></div>
+          <div>
+            <p class="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Deck</p>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">${escapeHtml(deck.title)}</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Created by ${escapeHtml(deck.creator || 'Unknown')}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="openAddCardModal()" class="admin-only px-4 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-blue-600 hover:from-brand-700 hover:to-blue-700 text-white font-medium text-xs shadow-md">Add Card</button>
+          <button onclick="startDeckStudy('${deck.id}')" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-medium text-xs">Study Deck</button>
+        </div>
+      `;
+
+      document.getElementById('count-all-cards').textContent = String(allCards.length);
+      document.getElementById('count-starred-cards').textContent = String(allCards.filter(c => c.starred).length);
+
+      document.getElementById('filter-btn-all').className = `px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${cardFilter === 'all' ? 'bg-brand-500 text-white shadow-sm' : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700'}`;
+      document.getElementById('filter-btn-starred').className = `px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${cardFilter === 'starred' ? 'bg-brand-500 text-white shadow-sm' : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700'}`;
+
+      if (filteredCards.length === 0) {
+        container.innerHTML = '<div class="col-span-full py-12 text-center text-sm text-slate-500 dark:text-slate-400">No cards match this filter.</div>';
+        return;
+      }
+
+      container.innerHTML = filteredCards.map(card => `
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-4 shadow-sm hover:shadow-md transition-all">
+          <div class="flex items-start justify-between gap-2 mb-3">
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Card</span>
+            <button onclick="toggleCardStar('${deck.id}', '${card.id}')" class="p-1.5 rounded-full ${card.starred ? 'text-amber-400' : 'text-slate-300 dark:text-slate-600'} hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Toggle star">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.118 0l-2.8 2.034c-.785.57-1.84-.197-1.54-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.216 8.71c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"/></svg>
+            </button>
+          </div>
+
+          <div class="space-y-3 text-sm text-slate-700 dark:text-slate-200">
+            <div>
+              <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 mb-1">Front</p>
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 p-3 whitespace-pre-wrap">${escapeHtml(card.front)}</div>
+            </div>
+            <div>
+              <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 mb-1">Back</p>
+              <div class="rounded-xl bg-blue-50 dark:bg-blue-950/40 p-3 whitespace-pre-wrap">${escapeHtml(card.back)}</div>
+            </div>
+          </div>
+
+          <div class="mt-4 flex justify-end gap-2">
+            <button onclick="openEditCardModal('${deck.id}', '${card.id}')" class="admin-only px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-semibold">Edit</button>
+            <button onclick="deleteCard('${deck.id}', '${card.id}')" class="admin-only px-3 py-1.5 rounded-lg bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-300 text-xs font-semibold">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setCardFilter(filter) {
+      cardFilter = filter;
+      if (currentDeckId) renderDeckDetail();
+    }
+
+    function toggleCardStar(deckId, cardId) {
+      const deck = decks.find(d => d.id === deckId);
+      if (!deck) return;
+      const card = deck.cards.find(c => c.id === cardId);
+      if (!card) return;
+      card.starred = !card.starred;
+      saveDecks();
+      renderDeckDetail();
+    }
+
     function openAddCardModal() {
       if (!checkAdminPermission()) return;
       document.getElementById('card-modal-title').innerText = 'Add New Flashcard';
       document.getElementById('card-edit-id').value = '';
       document.getElementById('card-front-input').value = '';
       document.getElementById('card-back-input').value = '';
-      tempFrontImg = '';
-      tempBackImg = '';
-      removeCardImage('front');
-      removeCardImage('back');
+      document.getElementById('continuous-add-toggle').checked = true;
+      document.getElementById('front-image-preview').classList.add('hidden');
+      document.getElementById('back-image-preview').classList.add('hidden');
       openModal('modal-card');
     }
 
-    function openEditCardModal(cardId) {
+    function openEditCardModal(deckId, cardId) {
       if (!checkAdminPermission()) return;
-      const deck = decks.find(d => d.id === currentDeckId);
+      const deck = decks.find(d => d.id === deckId);
       if (!deck) return;
       const card = deck.cards.find(c => c.id === cardId);
       if (!card) return;
-
       document.getElementById('card-modal-title').innerText = 'Edit Flashcard';
       document.getElementById('card-edit-id').value = card.id;
       document.getElementById('card-front-input').value = card.front;
       document.getElementById('card-back-input').value = card.back;
-      
-      tempFrontImg = card.frontImageg || '';
-      tempBackImg = card.backImage || '';
-
-      if (tempFrontImg) showImagePreview('front', tempFrontImg);
-      else removeCardImage('front');
-
-      if (tempBackImg) showImagePreview('back', tempBackImg);
-      else removeCardImage('back');
-
       openModal('modal-card');
     }
 
-    async function handleCardSubmit(e) {
-  e.preventDefault();
-
-  if (!checkAdminPermission()) {
-    return;
-  }
-
-  if (uploadingFrontImage || uploadingBackImage) {
-    alert('Please wait for the image upload to finish.');
-    return;
-  }
-
-  const deck = decks.find(d => d.id === currentDeckId);
-
-  if (!deck) {
-    alert('No deck is selected.');
-    return;
-  }
-
-  const front = document.getElementById('card-front-input').value.trim();
-  const back = document.getElementById('card-back-input').value.trim();
-  const editId = document.getElementById('card-edit-id').value;
-
-  if (!front && !back && !tempFrontImg && !tempBackImg) {
-    alert('Please enter text or add an image.');
-    return;
-  }
-
-  if (editId) {
-    const card = deck.cards.find(c => c.id === editId);
-
-    if (card) {
-      card.front = front;
-      card.back = back;
-      card.frontImage = tempFrontImg || '';
-      card.backImage = tempBackImg || '';
-    }
-  } else {
-    deck.cards.push({
-      id: `card_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      front: front,
-      back: back,
-      frontImage: tempFrontImg || '',
-      backImage: tempBackImg || '',
-      starred: false
-    });
-  }
-
-  try {
-    await saveDecks();
-
-    renderDeckDetail();
-
-    const keepOpen = document.getElementById('continuous-add-toggle').checked;
-
-    if (keepOpen && !editId) {
-      document.getElementById('form-card').reset();
-      document.getElementById('card-edit-id').value = '';
-      document.getElementById('card-modal-title').textContent = 'Add New Flashcard';
-
-      tempFrontImg = '';
-      tempBackImg = '';
-
-      removeCardImage('front');
-      removeCardImage('back');
-    } else {
-      closeModal('modal-card');
-    }
-  } catch (error) {
-    console.error('Could not add card:', error);
-    alert('The card could not be saved. Check the browser console for the error.');
-  }
-}
-
-    function deleteCard(cardId) {
+    function handleCardSubmit(event) {
+      event.preventDefault();
       if (!checkAdminPermission()) return;
+
       const deck = decks.find(d => d.id === currentDeckId);
       if (!deck) return;
 
-      if (confirm('Delete this card?')) {
-        deck.cards = deck.cards.filter(c => c.id !== cardId);
-        saveDecks();
-        renderDeckDetail();
-      }
-    }
+      const editId = document.getElementById('card-edit-id').value;
+      const front = document.getElementById('card-front-input').value.trim();
+      const back = document.getElementById('card-back-input').value.trim();
 
-    function toggleStarCard(cardId) {
-      const deck = decks.find(d => d.id === currentDeckId);
-      if (!deck) return;
-      const card = deck.cards.find(c => c.id === cardId);
-      if (card) {
-        card.starred = !card.starred;
-        saveDecks();
-        renderDeckDetail();
-      }
-    }
+      if (!front || !back) return;
 
-    /* Image Preview Handlers */
-    async function handleImageUpload(event, side) {
-  const file = event.target.files && event.target.files[0];
-
-  if (!file) {
-    return;
-  }
-
-  if (!file.type.startsWith('image/')) {
-    alert('Please select an image file.');
-    event.target.value = '';
-    return;
-  }
-
-  // Prevent very large files from appearing to hang.
-  const maxSizeMB = 10;
-  if (file.size > maxSizeMB * 1024 * 1024) {
-    alert(`Image must be smaller than ${maxSizeMB} MB.`);
-    event.target.value = '';
-    return;
-  }
-
-  const preview = document.getElementById(`${side}-image-preview`);
-  const removeButton = document.getElementById(`remove-${side}-image-btn`);
-
-  let uploadTask = null;
-
-  try {
-    if (preview) {
-      preview.classList.remove('hidden');
-      preview.innerHTML = `
-        <div class="text-xs text-slate-500 dark:text-slate-400">
-          Uploading ${file.name}...
-          <div class="mt-2 w-full h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
-            <div id="${side}-upload-progress"
-                 class="h-full bg-brand-500 transition-all"
-                 style="width: 0%">
-            </div>
-          </div>
-          <div id="${side}-upload-status" class="mt-1">
-            Starting upload...
-          </div>
-        </div>
-      `;
-    }
-
-    const progressBar = document.getElementById(`${side}-upload-progress`);
-    const statusText = document.getElementById(`${side}-upload-status`);
-
-    // Make sure Anonymous Authentication has completed.
-    if (!auth.currentUser) {
-      await new Promise((resolve, reject) => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
-          unsubscribe();
-
-          if (user) {
-            resolve(user);
-          } else {
-            reject(new Error('No Firebase user is signed in.'));
-          }
-        });
-      });
-    }
-
-    const userId = auth.currentUser.uid;
-    const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-    const filePath =
-      `flashcard-images/${userId}/${Date.now()}_${safeFileName}`;
-
-    const fileRef = storage.ref().child(filePath);
-
-    uploadTask = fileRef.put(file, {
-      contentType: file.type,
-      cacheControl: 'public,max-age=31536000'
-    });
-
-    await new Promise((resolve, reject) => {
-      uploadTask.on(
-        firebase.storage.TaskEvent.STATE_CHANGED,
-
-        snapshot => {
-          const percent =
-            Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
-
-          if (progressBar) {
-            progressBar.style.width = `${percent}%`;
-          }
-
-          if (statusText) {
-            statusText.textContent = `Uploading... ${percent}%`;
-          }
-        },
-
-        error => {
-          reject(error);
-        },
-
-        () => {
-          resolve();
+      if (editId) {
+        const card = deck.cards.find(c => c.id === editId);
+        if (card) {
+          card.front = front;
+          card.back = back;
+          card.starred = !!card.starred;
         }
-      );
-    });
+      } else {
+        deck.cards.push({
+          id: `card_${Date.now()}`,
+          front,
+          back,
+          starred: false
+        });
+      }
 
-    const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+      saveDecks();
+      closeModal('modal-card');
+      renderDeckDetail();
 
-    if (side === 'front') {
-      tempFrontImg = downloadURL;
-    } else {
-      tempBackImg = downloadURL;
+      if (!document.getElementById('continuous-add-toggle').checked) {
+        closeModal('modal-card');
+      } else {
+        document.getElementById('card-front-input').value = '';
+        document.getElementById('card-back-input').value = '';
+      }
     }
 
-    if (preview) {
-      preview.innerHTML = `
-        <img
-          src="${downloadURL}"
-          alt="${side} card image preview"
-          class="max-h-32 max-w-full mx-auto rounded-lg object-contain"
-        />
-        <p class="mt-1 text-xs text-emerald-600 dark:text-emerald-400 text-center">
-          Upload complete
-        </p>
-      `;
+    function deleteCard(deckId, cardId) {
+      if (!checkAdminPermission()) return;
+      const deck = decks.find(d => d.id === deckId);
+      if (!deck) return;
+      deck.cards = deck.cards.filter(c => c.id !== cardId);
+      saveDecks();
+      renderDeckDetail();
     }
 
-    if (removeButton) {
-      removeButton.classList.remove('hidden');
+    function handleSearch(val) {
+      searchQuery = val;
+      if (currentDeckId) renderDeckDetail();
+      else renderLibrary();
     }
 
-    console.log(`${side} image uploaded successfully:`, downloadURL);
-
-  } catch (error) {
-    console.error(`${side} image upload failed:`, error);
-
-    if (preview) {
-      preview.classList.remove('hidden');
-      preview.innerHTML = `
-        <p class="text-xs text-blue-600 dark:text-blue-400">
-          Upload failed: ${error.code || error.message}
-        </p>
-      `;
-    }
-
-    alert(
-      `Image upload failed.\n\n${error.code || error.message}\n\n` +
-      `Check the browser console for details.`
-    );
-
-    if (side === 'front') {
-      tempFrontImg = '';
-    } else {
-      tempBackImg = '';
-    }
-  } finally {
-    // Always clear the file input so the same image can be selected again.
-    event.target.value = '';
-  }
-}
-
-    function showImagePreview(side, src) {
-      const container = document.getElementById(`${side}-image-preview`);
-      const btn = document.getElementById(`remove-${side}-image-btn`);
-      container.innerHTML = `<img src="${src}" class="max-h-28 rounded-lg mx-auto">`;
-      container.classList.remove('hidden');
-      btn.classList.remove('hidden');
-    }
-
-    function removeCardImage(side) {
-  if (side === 'front') {
-    tempFrontImg = '';
-  } else {
-    tempBackImg = '';
-  }
-
-  const preview = document.getElementById(`${side}-image-preview`);
-  const removeButton = document.getElementById(`remove-${side}-image-btn`);
-  const input = document.getElementById(`card-${side}-image-input`);
-
-  if (preview) {
-    preview.innerHTML = '';
-    preview.classList.add('hidden');
-  }
-
-  if (removeButton) {
-    removeButton.classList.add('hidden');
-  }
-
-  if (input) {
-    input.value = '';
-  }
-}
-
-    /* CSV Import Handlers */
     function openCSVImportModal() {
       if (!checkAdminPermission()) return;
-      document.getElementById('csv-file-label').innerText = 'Click to upload CSV';
-      tempCSVContent = '';
       openModal('modal-csv');
     }
 
-    function handleCSVFileSelect(e) {
-      const file = e.target.files[0];
+    function handleCSVFileSelect(event) {
+      const file = event.target.files[0];
       if (!file) return;
-
-      document.getElementById('csv-file-label').innerText = file.name;
       const reader = new FileReader();
-      reader.onload = function(evt) {
-        tempCSVContent = evt.target.result;
+      reader.onload = (e) => {
+        tempCSVContent = e.target.result;
+        document.getElementById('csv-file-label').textContent = file.name;
       };
       reader.readAsText(file);
     }
 
     function importCSVData() {
-      if (!checkAdminPermission()) return;
-      if (!tempCSVContent.trim()) {
-        alert('Please select a valid CSV file.');
-        return;
-      }
-
+      if (!currentDeckId) return;
+      if (!tempCSVContent) return;
+      const rows = tempCSVContent.split(/\r?\n/).filter(line => line.trim());
       const deck = decks.find(d => d.id === currentDeckId);
       if (!deck) return;
 
-      const lines = tempCSVContent.split(/\r\n|\n/);
-      let added = 0;
-
-      lines.forEach(line => {
-        const parts = line.split(',');
-        if (parts.length >= 2) {
-          const front = parts[0].trim();
-          const back = parts.slice(1).join(',').trim();
-          if (front && back) {
-            deck.cards.push({
-              id: 'card_' + Date.now() + Math.random().toString(36).substr(2, 4),
-              front: front,
-              back: back,
-              starred: false
-            });
-            added++;
-          }
+      rows.forEach((row) => {
+        const cols = row.split(',').map(v => v.trim());
+        if (cols.length >= 2) {
+          deck.cards.push({
+            id: `card_${Date.now()}_${Math.random().toString(16).slice(2)}`,
+            front: cols[0],
+            back: cols[1],
+            starred: false
+          });
         }
       });
 
       saveDecks();
       closeModal('modal-csv');
       renderDeckDetail();
-      alert(`Successfully imported ${added} flashcards.`);
     }
 
-    /* Study Mode Handlers */
+    function handleImageUpload(event, side) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target.result;
+        if (side === 'front') {
+          tempFrontImg = result;
+          document.getElementById('front-image-preview').innerHTML = `<img src="${result}" class="max-h-32 rounded-lg" />`;
+          document.getElementById('front-image-preview').classList.remove('hidden');
+          document.getElementById('remove-front-image-btn').classList.remove('hidden');
+        } else {
+          tempBackImg = result;
+          document.getElementById('back-image-preview').innerHTML = `<img src="${result}" class="max-h-32 rounded-lg" />`;
+          document.getElementById('back-image-preview').classList.remove('hidden');
+          document.getElementById('remove-back-image-btn').classList.remove('hidden');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeCardImage(side) {
+      if (side === 'front') {
+        tempFrontImg = '';
+        document.getElementById('card-front-image-input').value = '';
+        document.getElementById('front-image-preview').classList.add('hidden');
+        document.getElementById('remove-front-image-btn').classList.add('hidden');
+      } else {
+        tempBackImg = '';
+        document.getElementById('card-back-image-input').value = '';
+        document.getElementById('back-image-preview').classList.add('hidden');
+        document.getElementById('remove-back-image-btn').classList.add('hidden');
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     function startStudyMode() {
       const deck = decks.find(d => d.id === currentDeckId);
-      if (!deck || deck.cards.length === 0) {
-        alert('Add cards to this deck before starting study mode!');
-        navigateTo('deck');
+      if (!deck) return;
+
+      const cards = deck.cards || [];
+      if (!cards.length) {
+        alert('This deck has no cards to study.');
         return;
       }
 
-      document.getElementById('study-deck-title').innerText = deck.title;
-
-const cardsToStudy = studyStarredOnly
-  ? deck.cards.filter(card => card.starred)
-  : deck.cards;
-
-if (cardsToStudy.length === 0) {
-  alert('There are no starred cards in this deck.');
-  studyStarredOnly = false;
-  return;
-}
-
-studyCards = [...cardsToStudy];
-
-if (isShuffled) {
-  studyCards.sort(() => Math.random() - 0.5);
-}
-
+      studyCards = cards;
       studyIndex = 0;
       isFlipped = false;
-      renderStudyCard();
+      frontFirstMode = true;
+      document.getElementById('study-card-front-text').textContent = ''; 
+      document.getElementById('study-card-back-text').textContent = '';
+      updateStudyUI();
+      document.getElementById('view-study').classList.remove('hidden');
     }
 
-    function renderStudyCard() {
-      if (studyCards.length === 0) return;
-
+    function updateStudyUI() {
+      if (!studyCards.length) return;
       const card = studyCards[studyIndex];
-      const cardInner = document.getElementById('3d-card-inner');
-
-      // Reset Flip State
-      isFlipped = false;
-      cardInner.classList.remove('rotate-y-180');
-
-      // Set Text
-      const frontText = frontFirstMode ? card.front : card.back;
-      const backText = frontFirstMode ? card.back : card.front;
-
-      document.getElementById('study-card-front-text').innerHTML = frontText + (card.frontImageg ? `<div class="mt-3"><img src="${card.frontImageg}" class="max-h-40 rounded-xl mx-auto border border-slate-200 dark:border-slate-800"></div>` : '');
-      document.getElementById('study-card-back-text').innerHTML = backText + (card.backImage ? `<div class="mt-3"><img src="${card.backImage}" class="max-h-40 rounded-xl mx-auto border border-slate-200 dark:border-slate-800"></div>` : '');
-
-      // Star Icon
-      // Star Icon
-const starIcon = document.getElementById('study-star-icon');
-const isStarred = Boolean(card.starred);
-
-starIcon.classList.toggle('text-amber-400', isStarred);
-starIcon.classList.toggle('fill-amber-400', isStarred);
-starIcon.classList.toggle('text-slate-300', !isStarred);
-starIcon.classList.toggle('dark:text-slate-600', !isStarred);
-
-      // Progress Bar & Counter
       const current = studyIndex + 1;
       const total = studyCards.length;
-      const percent = Math.round((current / total) * 100);
 
-      document.getElementById('study-current-num').innerText = current;
-      document.getElementById('study-total-num').innerText = total;
-      document.getElementById('study-progress-percent').innerText = `${percent}%`;
-      document.getElementById('study-progress-bar').style.width = `${percent}%`;
+      document.getElementById('study-deck-title').textContent = (decks.find(d => d.id === currentDeckId)?.title || 'Study Deck');
+      document.getElementById('study-current-num').textContent = current;
+      document.getElementById('study-total-num').textContent = total;
+      document.getElementById('study-progress-percent').textContent = `${Math.round((current / total) * 100)}%`;
+      document.getElementById('study-progress-bar').style.width = `${(current / total) * 100}%`;
+
+      const frontText = document.getElementById('study-card-front-text');
+      const backText = document.getElementById('study-card-back-text');
+      const cardInner = document.getElementById('3d-card-inner');
+
+      frontText.innerHTML = card.front;
+      backText.innerHTML = card.back;
+      cardInner.classList.remove('rotate-y-180');
+      isFlipped = false;
     }
 
     function flipStudyCard() {
       const cardInner = document.getElementById('3d-card-inner');
+      if (!cardInner) return;
       isFlipped = !isFlipped;
-      if (isFlipped) {
-        cardInner.classList.add('rotate-y-180');
-      } else {
-        cardInner.classList.remove('rotate-y-180');
-      }
-    }
-
-    function nextStudyCard() {
-      if (studyIndex < studyCards.length - 1) {
-        studyIndex++;
-        renderStudyCard();
-      } else {
-        studyIndex = 0;
-        renderStudyCard();
-      }
+      cardInner.classList.toggle('rotate-y-180', isFlipped);
     }
 
     function prevStudyCard() {
-      if (studyIndex > 0) {
-        studyIndex--;
-        renderStudyCard();
-      }
+      if (studyCards.length === 0) return;
+      studyIndex = (studyIndex - 1 + studyCards.length) % studyCards.length;
+      isFlipped = false;
+      updateStudyUI();
     }
 
-    function toggleStarCurrentStudyCard() {
-      const card = studyCards[studyIndex];
-      if (!card) return;
-      card.starred = !card.starred;
-
-      // Update in primary data store
-      const deck = decks.find(d => d.id === currentDeckId);
-      if (deck) {
-        const primaryCard = deck.cards.find(c => c.id === card.id);
-        if (primaryCard) primaryCard.starred = card.starred;
-        saveDecks();
-      }
-
-      renderStudyCard();
+    function nextStudyCard() {
+      if (studyCards.length === 0) return;
+      studyIndex = (studyIndex + 1) % studyCards.length;
+      isFlipped = false;
+      updateStudyUI();
     }
 
     function toggleStudyShuffle() {
       isShuffled = !isShuffled;
-      const btn = document.getElementById('study-shuffle-btn');
-      if (isShuffled) {
-        btn.classList.add('text-brand-500', 'border-brand-500');
-      } else {
-        btn.classList.remove('text-brand-500', 'border-brand-500');
+      if (isShuffled && studyCards.length > 1) {
+        studyCards = [...studyCards].sort(() => Math.random() - 0.5);
+        studyIndex = 0;
       }
-      startStudyMode();
+      updateStudyUI();
     }
+
     function toggleStudyStarredOnly() {
-  studyStarredOnly = !studyStarredOnly;
-
-  const btn = document.getElementById('study-starred-btn');
-
-  if (studyStarredOnly) {
-    btn.classList.add('text-brand-500', 'border-brand-500');
-  } else {
-    btn.classList.remove('text-brand-500', 'border-brand-500');
-  }
-
-  startStudyMode();
-}
+      studyStarredOnly = !studyStarredOnly;
+      const deck = decks.find(d => d.id === currentDeckId);
+      if (!deck) return;
+      const cards = deck.cards.filter(c => !studyStarredOnly || c.starred);
+      studyCards = cards.length ? cards : deck.cards;
+      studyIndex = 0;
+      updateStudyUI();
+    }
 
     function toggleFrontFirstMode() {
       frontFirstMode = !frontFirstMode;
-      document.getElementById('study-flip-side-btn').innerText = frontFirstMode ? 'Front First' : 'Back First';
-      renderStudyCard();
+      const btn = document.getElementById('study-flip-side-btn');
+      if (!btn) return;
+      btn.textContent = frontFirstMode ? 'Front First' : 'Back First';
+      if (!frontFirstMode) {
+        const cardInner = document.getElementById('3d-card-inner');
+        if (cardInner) cardInner.classList.add('rotate-y-180');
+      } else {
+        const cardInner = document.getElementById('3d-card-inner');
+        if (cardInner) cardInner.classList.remove('rotate-y-180');
+      }
     }
 
-    /* Keyboard Shortcuts */
+    function toggleStarCurrentStudyCard() {
+      const deck = decks.find(d => d.id === currentDeckId);
+      if (!deck || !studyCards.length) return;
+      const card = studyCards[studyIndex];
+      const original = deck.cards.find(c => c.id === card.id);
+      if (!original) return;
+      original.starred = !original.starred;
+      card.starred = original.starred;
+      saveDecks();
+      updateStudyUI();
+    }
+
     function setupKeyboardShortcuts() {
-      document.addEventListener('keydown', (e) => {
-        const studyView = document.getElementById('view-study');
-        if (!studyView.classList.contains('hidden')) {
-          if (e.code === 'Space') {
-            e.preventDefault();
-            flipStudyCard();
-          } else if (e.code === 'ArrowRight') {
-            nextStudyCard();
-          } else if (e.code === 'ArrowLeft') {
-            prevStudyCard();
-          }
+      document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space') {
+          if (document.getElementById('view-study').classList.contains('hidden')) return;
+          event.preventDefault();
+          flipStudyCard();
         }
       });
     }
-
-    /* Theme Toggle */
-   function toggleTheme() {
-  const html = document.documentElement;
-  const isDarkMode = html.classList.toggle('dark');
-
-  localStorage.setItem(
-    'flashforce_theme',
-    isDarkMode ? 'dark' : 'light'
-  );
-
-  // Rebuild inline-styled elements using the new theme
-  if (currentDeckId) {
-    renderDeckDetail();
-  } else {
-    renderLibrary();
-  }
-}
 
     function initTheme() {
-  const theme = localStorage.getItem('flashforce_theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedTheme = localStorage.getItem('flashforce_theme');
+      const useDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+      document.documentElement.classList.toggle('dark', useDark);
+      document.body.classList.toggle('dark', useDark);
+    }
 
-  if (theme === 'light') {
-    document.documentElement.classList.remove('dark');
-  } else {
-    document.documentElement.classList.add('dark');
-  }
-}
-
-    /* Helper Utilities */
-    function escapeHtml(text) {
-      if (!text) return '';
-      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    function toggleTheme() {
+      const dark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('flashforce_theme', dark ? 'dark' : 'light');
     }
   </script>
-  <script>
-  
-
-  // Update sync status indicator in your header
-  document.getElementById('sync-text').innerText = "Cloud Firestore Synced";
-
-  // ==========================================
-  // A. SAVING & LOADING DECKS
-  // ==========================================
-
-  // 1. Save new deck to Firestore on form submit
-  async function handleDeckSubmit(event) {
-    event.preventDefault();
-    const titleInput = document.getElementById('deck-title-input');
-    const title = titleInput.value.trim();
-const color = document.getElementById('deck-color-input').value || '#0066cc';
-    if (!title) return;
-
-    try {
-      // Add a new document to the "decks" collection in Firebase
-      await db.collection("decks").add({
-        title: title,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-
-      titleInput.value = '';
-      closeModal('modal-deck');
-    } catch (error) {
-      console.error("Error saving deck to cloud:", error);
-      alert("Failed to save deck online.");
-    }
-  }
-
-  // 2. Real-time Listener to Load Decks from Cloud
-  function loadDecksFromCloud() {
-    db.collection("decks").orderBy("createdAt", "desc")
-      .onSnapshot((snapshot) => {
-        const container = document.getElementById('decks-container');
-        container.innerHTML = ''; // Clear container
-
-        if (snapshot.empty) {
-          container.innerHTML = `<p class="text-sm text-slate-500">No decks found. Create one to get started!</p>`;
-          return;
-        }
-
-        snapshot.forEach((doc) => {
-          const deck = doc.data();
-          const deckId = doc.id;
-
-          // Render each deck card into HTML
-          container.innerHTML += `
-            <div onclick="selectDeck('${deckId}', '${deck.title}')" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all cursor-pointer">
-              <h3 class="font-bold text-lg text-slate-900 dark:text-slate-100">${deck.title}</h3>
-              <p class="text-xs text-slate-500 mt-2">Click to view cards</p>
-            </div>
-          `;
-        });
-      }, (error) => {
-        console.error("Error fetching decks:", error);
-      });
-  }
-
-  // ==========================================
-  // B. SAVING & LOADING FLASHCARDS
-  // ==========================================
-
-  // Select a deck to view its flashcards
-  function selectDeck(deckId, title) {
-    currentDeckId = deckId;
-    navigateTo('deck');
-    loadCardsFromCloud(deckId);
-  }
-
-  // 1. Save new flashcard under the selected deck
-  async function handleCardSubmit(event) {
-    event.preventDefault();
-    if (!currentDeckId) return alert("No deck selected!");
-
-    const frontText = document.getElementById('card-front-input').value.trim();
-    const backText = document.getElementById('card-back-input').value.trim();
-
-    if (!frontText || !backText) return;
-
-    try {
-      // Save card to the "cards" collection linked by deckId
-      await db.collection("cards").add({
-        deckId: currentDeckId,
-        front: frontText,
-        back: backText,
-        isStarred: false,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-
-      document.getElementById('card-front-input').value = '';
-      document.getElementById('card-back-input').value = '';
-
-      if (!document.getElementById('continuous-add-toggle').checked) {
-        closeModal('modal-card');
-      }
-    } catch (error) {
-      console.error("Error saving card to cloud:", error);
-    }
-  }
-
-  // 2. Real-time Listener to Load Cards for Selected Deck
-  function loadCardsFromCloud(deckId) {
-    db.collection("cards")
-      .where("deckId", "==", deckId)
-      .onSnapshot((snapshot) => {
-        const container = document.getElementById('cards-container');
-        container.innerHTML = '';
-
-        snapshot.forEach((doc) => {
-          const card = doc.data();
-          container.innerHTML += `
-            <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
-              <div class="text-xs font-bold text-blue-500">FRONT</div>
-              <div class="text-sm font-medium text-slate-800 dark:text-slate-200">${card.front}</div>
-              <hr class="border-slate-100 dark:border-slate-800">
-              <div class="text-xs font-bold text-emerald-500">BACK</div>
-              <div class="text-sm font-medium text-slate-800 dark:text-slate-200">${card.back}</div>
-            </div>
-          `;
-        });
-      });
-  }
-
-  // Start listening to decks automatically when page loads
-  window.addEventListener('DOMContentLoaded', () => {
-    loadDecksFromCloud();
-  });
-</script>
 </body>
 </html>
