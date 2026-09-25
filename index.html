@@ -1300,26 +1300,47 @@
     }
 
     function updateStudyUI() {
-      if (!studyCards.length) return;
-      const card = studyCards[studyIndex];
-      const current = studyIndex + 1;
-      const total = studyCards.length;
+  if (!studyCards.length) return;
 
-      document.getElementById('study-deck-title').textContent = (decks.find(d => d.id === currentDeckId)?.title || 'Study Deck');
-      document.getElementById('study-current-num').textContent = current;
-      document.getElementById('study-total-num').textContent = total;
-      document.getElementById('study-progress-percent').textContent = `${Math.round((current / total) * 100)}%`;
-      document.getElementById('study-progress-bar').style.width = `${(current / total) * 100}%`;
+  const card = studyCards[studyIndex];
+  const current = studyIndex + 1;
+  const total = studyCards.length;
 
-      const frontText = document.getElementById('study-card-front-text');
-      const backText = document.getElementById('study-card-back-text');
-      const cardInner = document.getElementById('3d-card-inner');
+  document.getElementById('study-deck-title').textContent =
+    decks.find(d => d.id === currentDeckId)?.title || 'Study Deck';
 
-      frontText.innerHTML = card.front;
-      backText.innerHTML = card.back;
-      cardInner.classList.remove('rotate-y-180');
-      isFlipped = false;
-    }
+  document.getElementById('study-current-num').textContent = current;
+  document.getElementById('study-total-num').textContent = total;
+  document.getElementById('study-progress-percent').textContent =
+    `${Math.round((current / total) * 100)}%`;
+  document.getElementById('study-progress-bar').style.width =
+    `${(current / total) * 100}%`;
+
+  const frontText = document.getElementById('study-card-front-text');
+  const backText = document.getElementById('study-card-back-text');
+  const cardInner = document.getElementById('3d-card-inner');
+  const starIcon = document.getElementById('study-star-icon');
+
+  frontText.innerHTML = card.front;
+  backText.innerHTML = card.back;
+
+  // Keep the study-mode star synchronized with the current card.
+  if (starIcon) {
+    const isStarred = card.starred === true;
+
+    starIcon.classList.toggle('text-amber-400', isStarred);
+    starIcon.classList.toggle('fill-amber-400', isStarred);
+    starIcon.classList.toggle('text-slate-300', !isStarred);
+    starIcon.classList.toggle('dark:text-slate-600', !isStarred);
+    starIcon.setAttribute(
+      'aria-label',
+      isStarred ? 'Remove star from card' : 'Star card'
+    );
+  }
+
+  cardInner.classList.remove('rotate-y-180');
+  isFlipped = false;
+}
 
     function flipStudyCard() {
       const cardInner = document.getElementById('3d-card-inner');
@@ -1376,16 +1397,19 @@
     }
 
     function toggleStarCurrentStudyCard() {
-      const deck = decks.find(d => d.id === currentDeckId);
-      if (!deck || !studyCards.length) return;
-      const card = studyCards[studyIndex];
-      const original = deck.cards.find(c => c.id === card.id);
-      if (!original) return;
-      original.starred = !original.starred;
-      card.starred = original.starred;
-      saveDecks();
-      updateStudyUI();
-    }
+  const deck = decks.find(d => d.id === currentDeckId);
+  if (!deck || !studyCards.length) return;
+
+  const card = studyCards[studyIndex];
+  const original = deck.cards.find(c => c.id === card.id);
+  if (!original) return;
+
+  original.starred = !original.starred;
+  card.starred = original.starred;
+
+  saveDecks();
+  updateStudyUI();
+}
 
     function setupKeyboardShortcuts() {
       document.addEventListener('keydown', (event) => {
