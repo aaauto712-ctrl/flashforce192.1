@@ -569,9 +569,16 @@
           </div>
 
           <div class="space-y-3">
-            <p class="text-xs text-slate-600 dark:text-slate-400">
-              Upload a <code>.csv</code> file with two columns: <strong>Front, Back</strong>.
-            </p>
+            <!-- add this inside the CSV modal, near the file input/label -->
+<div class="mt-3 flex items-center gap-3">
+  <label class="text-xs text-slate-600 dark:text-slate-400 font-medium">Delimiter</label>
+  <select id="csv-delimiter-select" class="text-sm rounded-lg border px-2 py-1 bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700">
+    <option value="auto">Auto-detect</option>
+    <option value=",">Comma (,)</option>
+    <option value=";">Semicolon (;)</option>
+  </select>
+  <span class="text-xs text-slate-400 dark:text-slate-500">Choose how columns are separated</span>
+</div>
 
             <div class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-6 text-center hover:border-brand-500 transition-colors">
               <input type="file" id="csv-file-input" accept=".csv, .txt" onchange="handleCSVFileSelect(event)" class="hidden">
@@ -1212,28 +1219,63 @@
     }
 
     function importCSVData() {
-      if (!currentDeckId) return;
-      if (!tempCSVContent) return;
-      const rows = tempCSVContent.split(/\r?\n/).filter(line => line.trim());
-      const deck = decks.find(d => d.id === currentDeckId);
-      if (!deck) return;
+  if (!currentDeckId) return;
+  if (!tempCSVContent) return;
 
-      rows.forEach((row) => {
-        const cols = row.split(',').map(v => v.trim());
-        if (cols.length >= 2) {
-          deck.cards.push({
-            id: `card_${Date.now()}_${Math.random().toString(16).slice(2)}`,
-            front: cols[0],
-            back: cols[1],
-            starred: false
-          });
-        }
-      });
+  const rows = tempCSVContent.split(/\r?\n/).filter(line => line.trim());
+  const deck = decks.find(d => d.id === currentDeckId);
+  if (!deck) return;
 
-      saveDecks();
-      closeModal('modal-csv');
-      renderDeckDetail();
+  // Get user's delimiter choice
+  const delimSelect = document.getElementById('csv-delimiter-select');
+  let delimiter = ',';
+  if (delimSelect) {
+    const choice = delimSelect.value;
+    if (choice === 'auto') {
+      // Auto-detect based on counts in first non-empty row
+      const firstRow = rows.find(r => r.trim()) || '';
+      const commaCount = (firstRow.match(/,/g) || []).length;
+      const semicolonCount = (firstRow.match(/;/g) || []).length;
+      delimiter = semicolonCount > commaCount ? ';' : ',';
+    } else {
+      delimiter = choice;
     }
+  }
+
+  rows.forEach((row, index) => {
+    // Skip empty lines (already filtered) and allow header skip
+    // Split using the chosen delimiter (simple split)
+    // Note: this simple split does NOT handle quoted fields with delimiters inside quotes.
+    const cols = row.split(delimiter).map(v => v.trim());
+
+    // Skip header if it's "Front,Back" or "Front;Back"
+    if (index === 0 && cols[0]?.toLowerCase() === 'front' && cols[1]?.toLowerCase() === 'back') {
+      return;
+    }
+
+    if (cols.length >= 2 && cols[0] && cols[1]) {
+      deck.cards.push({
+        id: `card_${Date.now()}_${Math.random().toString(16).slice(2)}`,
+        front: cols[0],
+        // if there are more than 2 columns, join the rest back into the 'back' field
+        back: cols.slice(1).join(delimiter).trim(),
+        starred: false
+      });
+    }
+  });
+
+  saveDecks();
+  closeModal('modal-csv');
+  renderDeckDetail();
+
+  // cleanup
+  tempCSVContent = '';
+  const fileInput = document.getElementById('csv-file-input');
+  if (fileInput) fileInput.value = '';
+  const label = document.getElementById('csv-file-label');
+  if (label) label.textContent = 'Click to upload CSV';
+  if (delimSelect) delimSelect.value = 'auto';
+}
 
     function handleImageUpload(event, side) {
       const file = event.target.files[0];
